@@ -12,6 +12,13 @@ class PlansSchema extends Schema {
       table.string('value')
       table.string('description')
       table.string('status')
+      table
+            .integer('tutor_id')
+            .unsigned()
+            .references('id')
+            .inTable('tutors')
+            .onUpdate('CASCADE')
+            .onDelete('CASCADE')
       table.timestamps()
     })
   }

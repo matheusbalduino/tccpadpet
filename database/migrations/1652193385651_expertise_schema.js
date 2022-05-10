@@ -9,13 +9,6 @@ class ExpertiseSchema extends Schema {
       table.increments()
       table.string('name')
       table.string('description')
-      table
-          .integer('veterinary_id')
-          .unsigned()
-          .references('id')
-          .inTable('veterinaries')
-          .onUpdate('CASCADE')
-          .onDelete('CASCADE')
       table.timestamps()
     })
   }

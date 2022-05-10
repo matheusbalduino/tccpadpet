@@ -12,6 +12,9 @@ class Tutor extends Model {
   user(){
     return this.belongsTo('App/Models/User')
   }
+  plans(){
+    return this.hasMany('App/Models/Plan')
+  }
 }
 
 module.exports = Tutors

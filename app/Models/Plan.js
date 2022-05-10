@@ -4,7 +4,9 @@
 const Model = use('Model')
 
 class Plan extends Model {
-
+  tutor(){
+    return this.belongsTo('App/Models/Tutor')
+  }
 }
 
 module.exports = Plan
