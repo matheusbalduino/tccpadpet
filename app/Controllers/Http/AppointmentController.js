@@ -1,5 +1,7 @@
 'use strict'
 
+const Appointment = use('App/Models/Appointment');
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -20,17 +22,6 @@ class AppointmentController {
   async index ({ request, response, view }) {
   }
 
-  /**
-   * Render a form to be used for creating a new appointment.
-   * GET appointments/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
 
   /**
    * Create/save a new appointment.
@@ -41,31 +32,24 @@ class AppointmentController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const data = request.only([
+      'appointment_date',
+      'annotation',
+      'case',
+      'description',
+      'treatment',
+      'return_appointment',
+      'tutor_id',
+      'veterinary_id',
+      'schedule_id'
+    ]);
+
+    const appointment = await Appointment.create(data);
+
+    return response.status(200).send({appointment: appointment})
+
   }
 
-  /**
-   * Display a single appointment.
-   * GET appointments/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing appointment.
-   * GET appointments/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
 
   /**
    * Update appointment details.

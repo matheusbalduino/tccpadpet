@@ -21,3 +21,4 @@ Route.get('/', () => {
 })
 
 require('./routes/user')
+require('./routes/appointment')

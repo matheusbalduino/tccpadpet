@@ -7,7 +7,7 @@ class AppointmentSchema extends Schema {
   up () {
     this.create('appointments', (table) => {
       table.increments()
-      table.date('appointment_date')
+      table.datetime('appointment_date')
       table.string('annotation')
       table.string('case')
       table.string('description')
@@ -32,13 +32,6 @@ class AppointmentSchema extends Schema {
           .unsigned()
           .references('id')
           .inTable('schedules')
-          .onUpdate('CASCADE')
-          .onDelete('CASCADE')
-      table
-          .integer('pet_id')
-          .unsigned()
-          .references('id')
-          .inTable('pets')
           .onUpdate('CASCADE')
           .onDelete('CASCADE')
       table.timestamps()
