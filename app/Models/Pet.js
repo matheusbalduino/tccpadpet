@@ -4,10 +4,13 @@
 const Model = use('Model')
 
 class Pet extends Model {
-  tutors(){
+  tutor(){
     return this
               .belongsToMany('App/Models/Tutor')
               .pivotTable('tutor_pets');
+  }
+  appointments(){
+    return this.hasMany('App/Models/Appointments')
   }
 
 }

@@ -5,10 +5,13 @@ const Model = use('Model')
 
 class Schedule extends Model {
   veterinary(){
-    this.belongsTo('App/Models/Veterinary')
+    return this.belongsTo('App/Models/Veterinary')
   }
   tutor(){
-    this.belongsTo('App/Models/Tutor')
+    return this.belongsTo('App/Models/Tutor')
+  }
+  pet(){
+    return this.belongsTo('App/Models/Pet')
   }
 
 

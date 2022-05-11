@@ -34,6 +34,13 @@ class AppointmentSchema extends Schema {
           .inTable('schedules')
           .onUpdate('CASCADE')
           .onDelete('CASCADE')
+      table
+          .integer('pet_id')
+          .unsigned()
+          .references('id')
+          .inTable('pets')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
       table.timestamps()
     })
   }

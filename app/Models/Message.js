@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class Message extends Model {
   veterinaries(){
-    return this.hasMany('App/Models/Veterinary')
+    return this.belongsTo('App/Models/Veterinary')
   }
 
   tutors(){
-    return this.hasMany('App/Models/Tutor')
+    return this.belongsTo('App/Models/Tutor')
   }
 }
 

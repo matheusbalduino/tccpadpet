@@ -5,13 +5,16 @@ const Model = use('Model')
 
 class Appointment extends Model {
   tutors(){
-    return this.hasMany('App/Models/Tutor')
+    return this.belongsTo('App/Models/Tutor')
   }
   veterinaries(){
-    return this.hasMany('App/Models/Veterinary')
+    return this.belongsTo('App/Models/Veterinary')
   }
   schedule(){
-    return this.hasMany('App/Models/Schedule')
+    return this.belongsTo('App/Models/Schedule')
+  }
+  pets(){
+    return this.belongsTo('App/Models/Pet')
   }
 }
 

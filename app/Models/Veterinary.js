@@ -8,8 +8,17 @@ class Veterinary extends Model {
     return this.belongsTo('App/Models/User')
   }
   expertise(){
-    this.belongsToMany('App/Models/Expertise')
+    return this.belongsToMany('App/Models/Expertise')
     .pivotTable('veterinary_expertises')
+  }
+  messages(){
+    return this.hasMany('App/Models/Message')
+  }
+  appointments(){
+    return this.hasMany('App/Models/Appointment')
+  }
+  schedule(){
+    return this.hasMany('App/Models/Schedule')
   }
 }
 
