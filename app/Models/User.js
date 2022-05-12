@@ -35,12 +35,12 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
-  veterinaries(){
-    return this.hasOne('App/Models/Veterinary')
+  veterinary(){
+    return this.belongsTo('App/Models/Veterinary')
   }
 
-  tutors(){
-    return this.hasOne('App/Models/Tutors')
+  tutor(){
+    return this.belongsTo('App/Models/Tutor')
   }
 
 

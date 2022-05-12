@@ -60,6 +60,33 @@ class AppointmentController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const {id} = params;
+    const data = request.only([
+      'appointment_date',
+      'annotation',
+      'case',
+      'description',
+      'treatment',
+      'return_appointment',
+      'tutor_id',
+      'veterinary_id',
+      'schedule_id'
+    ]);
+    try{
+      if(!data) throw new Error('Erro de dados');
+
+      const appointment = await Appointment.find(id);
+      if(!appointment) throw new Error('Não existe consulta');
+
+      appointment.merge(data);
+      await appointment.save();
+
+      return response.send({appointment});
+
+    }catch(error){
+      throw error;
+    }
+
   }
 
   /**

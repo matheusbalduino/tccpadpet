@@ -10,7 +10,7 @@ class Tutor extends Model {
               .pivotTable('tutor_pets');
   }
   user(){
-    return this.belongsTo('App/Models/User')
+    return this.hasOne('App/Models/User')
   }
   plans(){
     return this.hasMany('App/Models/Plan')
@@ -24,4 +24,4 @@ class Tutor extends Model {
 
 }
 
-module.exports = Tutors
+module.exports = Tutor

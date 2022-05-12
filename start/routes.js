@@ -20,5 +20,10 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-require('./routes/user')
-require('./routes/appointment')
+require('./routes/user');
+require('./routes/appointment');
+require('./routes/pet');
+require('./routes/vet');
+require('./routes/tutor');
+require('./routes/schedule');
+require('./routes/expertise');

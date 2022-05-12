@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Veterinary extends Model {
   user(){
-    return this.belongsTo('App/Models/User')
+    return this.hasOne('App/Models/User')
   }
   expertise(){
     return this.belongsToMany('App/Models/Expertise')

@@ -1,5 +1,7 @@
 'use strict'
 
+const Pet = use('App/Models/Pet');
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -21,18 +23,6 @@ class PetController {
   }
 
   /**
-   * Render a form to be used for creating a new pet.
-   * GET pets/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
    * Create/save a new pet.
    * POST pets
    *
@@ -41,30 +31,26 @@ class PetController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-  }
+    const data = request.only([
+      'name',
+      'race',
+      'weight',
+      'age',
+      'description',
+      'personality'
+    ]);
+    try {
 
-  /**
-   * Display a single pet.
-   * GET pets/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
+      if(!data) throw new Error('Erro ao cadastrar Pet');
 
-  /**
-   * Render a form to update an existing pet.
-   * GET pets/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+      const pet = await Pet.create(data);
+
+      return response.send({Pet: pet});
+
+    } catch (error) {
+      throw error;
+    }
+
   }
 
   /**

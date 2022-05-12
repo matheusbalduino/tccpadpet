@@ -7,11 +7,10 @@ class UserSchema extends Schema {
   up () {
     this.create('users', (table) => {
       table.increments()
-      table.string('username', 80).notNullable().unique()
+      table.string('username', 80).notNullable()
       table.string('password', 60).notNullable()
-      table.string('document').notNullable().unique()
-      table.string('email', 254).notNullable().unique()
       table.string('profession').notNullable()
+      table.string('role').notNullable()
       table.string('street')
       table.string('number')
       table.string('neighborhood')
@@ -26,26 +25,16 @@ class UserSchema extends Schema {
       table.increments()
       table.string('avatar')
       table.string('description')
-      table
-          .integer('user_id')
-          .unsigned()
-          .references('id')
-          .inTable('users')
-          .onUpdate('CASCADE')
-          .onDelete('CASCADE')
+      table.string('email', 254).notNullable().unique()
+      table.string('document').notNullable().unique()
       table.timestamps()
     })
 
     this.create('veterinaries', (table) => {
       table.increments()
       table.string('crmv').notNullable().unique()
-      table
-          .integer('user_id')
-          .unsigned()
-          .references('id')
-          .inTable('users')
-          .onUpdate('CASCADE')
-          .onDelete('CASCADE')
+      table.string('email', 254).notNullable().unique()
+      table.string('document').notNullable().unique()
       table.timestamps()
     })
   }

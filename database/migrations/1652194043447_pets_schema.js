@@ -13,7 +13,6 @@ class PetsSchema extends Schema {
       table.string('age').notNullable()
       table.string('description').notNullable()
       table.string('personality').notNullable()
-
     })
   }
 

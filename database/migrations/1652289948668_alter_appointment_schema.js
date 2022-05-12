@@ -21,7 +21,6 @@ class AlterAppointmentSchema extends Schema {
   down () {
     this.table('appointments', (table) => {
       // reverse alternations
-      table.dropColumn('pet_id')
     })
   }
 }

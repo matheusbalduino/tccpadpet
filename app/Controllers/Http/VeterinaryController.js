@@ -1,5 +1,7 @@
 'use strict'
 
+const Vet = use('App/Models/Veterinary');
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -21,18 +23,6 @@ class VeterinaryController {
   }
 
   /**
-   * Render a form to be used for creating a new veterinary.
-   * GET veterinaries/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
    * Create/save a new veterinary.
    * POST veterinaries
    *
@@ -41,30 +31,33 @@ class VeterinaryController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-  }
+    const data = request.only([
+      'crmv',
+      "email",
+      "document",
+      'expertise_id'
+    ]);
 
-  /**
-   * Display a single veterinary.
-   * GET veterinaries/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
+    const dataUser = request.only([
+      "username",
+      "password",
+      "profession",
+      "role"
+    ])
 
-  /**
-   * Render a form to update an existing veterinary.
-   * GET veterinaries/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+    try {
+      const vet = await Vet.create(data);
+
+      const user = await vet.user().create(dataUser);
+
+      return response.send({
+        User: user,
+        Vet: vet
+      });
+
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
