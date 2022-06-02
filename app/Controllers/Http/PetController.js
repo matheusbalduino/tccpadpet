@@ -1,6 +1,8 @@
 'use strict'
 
 const Pet = use('App/Models/Pet');
+const Tutor = use('App/Models/Tutor');
+const {asyncForEach} = use('App/Utils/asyncUtils')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -19,8 +21,35 @@ class PetController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ response }) {
+    try {
+     const pets = await Pet.query().withTutor().fetch();
+     return response.send(pets);
+    } catch (error) {
+
+    }
   }
+
+    /**
+   * Show a list of all pets.
+   * GET pets
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+     async getPetByTutor ({ response, params }) {
+      try {
+       const { id } = params;
+       const pets = await Pet.query().byTutor(id).fetch();
+
+
+       return response.send(pets);
+      } catch (error) {
+        throw error;
+      }
+    }
 
   /**
    * Create/save a new pet.
@@ -39,11 +68,18 @@ class PetController {
       'description',
       'personality'
     ]);
+
+    const {tutor_id} = request.post();
     try {
 
       if(!data) throw new Error('Erro ao cadastrar Pet');
 
+      const tutor = await Tutor.findBy('id',tutor_id);
+      if(!tutor) throw new Error('Tutor inexistente');
+
       const pet = await Pet.create(data);
+
+      await pet.tutor().attach(tutor.id);
 
       return response.send({Pet: pet});
 

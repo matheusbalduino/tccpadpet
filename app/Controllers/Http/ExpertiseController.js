@@ -13,6 +13,13 @@ class ExpertiseController{
    * @param {View} ctx.view
    */
    async index ({ request, response, view }) {
+
+    try{
+      const expertise = await Expertise.all();
+      return response.send(expertise);
+    }catch(error){
+      throw error;
+    }
   }
 
   /**

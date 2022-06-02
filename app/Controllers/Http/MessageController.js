@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Message = require('../../Repository/Message.js')
+
 /**
  * Resourceful controller for interacting with messages
  */
@@ -21,18 +23,6 @@ class MessageController {
   }
 
   /**
-   * Render a form to be used for creating a new message.
-   * GET messages/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
    * Create/save a new message.
    * POST messages
    *
@@ -40,7 +30,49 @@ class MessageController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async storeTutor ({ request, response }) {
+    const {message_sent,tutor_id,reciever
+    } = request.post()
+    try{
+
+      const message = new Message(
+        tutor_id,
+        reciever,
+        message_sent
+      );
+
+      const ret_message = await message.registerMessageTutor(tutor_id);
+      response.status(201).send({message:ret_message})
+
+    }catch(error){
+      throw error;
+    }
+  }
+ /**
+   * Create/save a new message.
+   * POST messages
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async storeVet ({ request, response }) {
+    const {message_sent,veterinary_id,reciever
+    } = request.post()
+    try{
+
+      const message = new Message(
+        veterinary_id,
+        reciever,
+        message_sent
+      );
+
+      const ret_message = await message.registerMessageVet(veterinary_id);
+      response.status(201).send({message:ret_message})
+
+    }catch(error){
+      throw error;
+    }
   }
 
   /**

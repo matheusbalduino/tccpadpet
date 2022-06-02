@@ -27,3 +27,4 @@ require('./routes/vet');
 require('./routes/tutor');
 require('./routes/schedule');
 require('./routes/expertise');
+require('./routes/messages');

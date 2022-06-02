@@ -15,7 +15,7 @@ class Tutor extends Model {
   plans(){
     return this.hasMany('App/Models/Plan')
   }
-  message(){
+  messages(){
     return this.hasMany('App/Models/Message')
   }
   appointments(){

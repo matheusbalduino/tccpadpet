@@ -32,15 +32,16 @@ class Schedule extends Model {
 
   static scopeScheduleByVet(query, vet_id){
     query
+    .select('schedule_date', 'annotation','id','veterinary_id','tutor_id')
     .where('veterinary_id', vet_id)
     .with('veterinary', builder => {
       builder.select(['id','crmv'])
-      .with('user', builder_user => { builder_user.select(['id','username','profession'])})
+      .with('user', builder_user => { builder_user.select(['veterinary_id','username','profession'])})
     })
     .with('tutor', builder => {
       builder.select(['id', 'avatar', 'description'])
       .with('user', builder_user => {
-        builder_user.select(['id', 'username', 'profession']);
+        builder_user.select(['tutor_id', 'username', 'profession']);
       })
     })
   }

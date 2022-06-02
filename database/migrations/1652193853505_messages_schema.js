@@ -8,6 +8,8 @@ class MessagesSchema extends Schema {
     this.create('messages', (table) => {
       table.increments()
       table.string('message')
+      table.integer('sender').notNullable()
+      table.integer('reciever').notNullable()
       table
           .integer('veterinary_id')
           .unsigned()
