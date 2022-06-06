@@ -4,6 +4,22 @@
 const Model = use('Model')
 
 class Tutor extends Model {
+
+  /**
+   * Scopes
+   */
+
+  static scopeMessagesTutor(query, id){
+    query.with('messages', ( builder )=> {
+      builder.where('tutor_id', id)
+    });
+
+    return query;
+  }
+
+  /**
+   * Relationship
+   */
   pets(){
     return this
               .belongsToMany('App/Models/Pet')

@@ -4,7 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Message = require('../../Repository/Message.js')
+const Message = require('../../Repository/Message.js');
+const Tutor = use('App/Models/Tutor');
+const Veterinary = use('App/Models/Veterinary')
 
 /**
  * Resourceful controller for interacting with messages
@@ -19,7 +21,20 @@ class MessageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async getMessagesByTutor ({ params, response }) {
+    try {
+      const { id } = params;
+
+      const messages = await Tutor.query()
+      .where('id', id)
+      .select(['id', 'avatar', 'document'])
+      .messagesTutor(id)
+      .fetch();
+
+      return response.send(messages);
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
