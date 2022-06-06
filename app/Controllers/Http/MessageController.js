@@ -5,6 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const Message = require('../../Repository/Message.js');
+const Messages = use('App/Models/Message');
 const Tutor = use('App/Models/Tutor');
 const Veterinary = use('App/Models/Veterinary')
 
@@ -21,33 +22,18 @@ class MessageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async getMessagesByTutor ({ params, response }) {
+  async getMessagesSender ({ params, response }) {
     try {
-      const { id } = params;
+      const { sender , reciever, typeuser } = params;
 
-      const messages = await Tutor.query()
-      .where('id', id)
-      .select(['id', 'avatar', 'document'])
-      .messagesTutor(id)
+      const message = await Messages.query()
+      .select(['tutor_id', 'veterinary_id', 'message','sender as user_id','reciever'])
+      .whereIn('sender', [sender, reciever])
+      .getSenderByUser(sender, reciever)
       .fetch();
 
-      return response.send(messages);
-    } catch (error) {
-      throw error;
-    }
-  }
+      return response.send(message);
 
-  async getMessagesByVet ({ params, response }) {
-    try {
-      const { id } = params;
-
-      const messages = await Veterinary.query()
-      .where('id', id)
-      .select(['id', 'avatar', 'document'])
-      .messagesVeterinary(id)
-      .fetch();
-
-      return response.send(messages);
     } catch (error) {
       throw error;
     }

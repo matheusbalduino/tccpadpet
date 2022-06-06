@@ -5,6 +5,5 @@ const Route = use('Route');
 Route.group(()=>{
   Route.post('/store/tutor', 'MessageController.storeTutor');
   Route.post('/store/vet', 'MessageController.storeVet');
-  Route.get('/index/tutor/:id', 'MessageController.getMessagesByTutor');
-  Route.get('/index/veterinary/:id', 'MessageController.getMessagesByVet');
+  Route.get('/index/sender/:sender/:reciever', 'MessageController.getMessagesSender');
 }).prefix('/message')

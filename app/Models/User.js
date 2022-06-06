@@ -43,6 +43,10 @@ class User extends Model {
     return this.belongsTo('App/Models/Tutor')
   }
 
+  messages(){
+    return this.hasMany('App/Models/Message')
+  }
+
 
 }
 
