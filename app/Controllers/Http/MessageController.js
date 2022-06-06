@@ -37,6 +37,22 @@ class MessageController {
     }
   }
 
+  async getMessagesByVet ({ params, response }) {
+    try {
+      const { id } = params;
+
+      const messages = await Veterinary.query()
+      .where('id', id)
+      .select(['id', 'avatar', 'document'])
+      .messagesVeterinary(id)
+      .fetch();
+
+      return response.send(messages);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /**
    * Create/save a new message.
    * POST messages

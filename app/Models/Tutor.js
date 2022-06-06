@@ -21,9 +21,8 @@ class Tutor extends Model {
    * Relationship
    */
   pets(){
-    return this
-              .belongsToMany('App/Models/Pet')
-              .pivotTable('tutor_pets');
+    return this.belongsToMany('App/Models/Pet')
+    .pivotTable('tutor_pets');
   }
   user(){
     return this.hasOne('App/Models/User')

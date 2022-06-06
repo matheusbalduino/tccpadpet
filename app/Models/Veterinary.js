@@ -4,6 +4,21 @@
 const Model = use('Model')
 
 class Veterinary extends Model {
+
+  /**
+   * Scope
+   */
+  static scopeMessagesVeterinary(query, id){
+    query.with('messages', (builder) => {
+      builder.where('veterinary_id', id)
+    });
+
+    return query;
+  }
+
+  /*
+  * Relationship
+  */
   user(){
     return this.hasOne('App/Models/User')
   }
