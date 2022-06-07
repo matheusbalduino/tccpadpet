@@ -32,9 +32,8 @@ class Message extends Model {
 
   static scopeGetSenderByUser(query, sender, reciever){
     query
-    .with('users', builder => {
-      builder.select(['id', 'username']).where('id', sender)
-    })
+    .with('users_sender', builder => builder.select(['id', 'username']))
+    .with('users_reciever', builder => builder.select(['id', 'username']))
 
     return query;
 
@@ -52,8 +51,12 @@ class Message extends Model {
     return this.belongsTo('App/Models/Tutor')
   }
 
-  users(){
-    return this.belongsTo('App/Models/User')
+  users_sender(){
+    return this.belongsTo('App/Models/User', 'sender', 'id')
+  }
+
+  users_reciever(){
+    return this.belongsTo('App/Models/User', 'reciever', 'id')
   }
 }
 

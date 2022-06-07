@@ -24,44 +24,19 @@ class MessageController {
    */
   async getMessagesSender ({ params, response }) {
     try {
-      const { sender , reciever, typeuser } = params;
+      const { sender , reciever } = params;
 
       const message = await Messages.query()
-      .select(['tutor_id', 'veterinary_id', 'message','sender as user_id','reciever'])
+      .select(['tutor_id', 'veterinary_id', 'message','sender','reciever'])
       .whereIn('sender', [sender, reciever])
+      .whereIn('reciever', [sender, reciever])
+      .andWhere('selfsender', false)
       .getSenderByUser(sender, reciever)
       .fetch();
 
       return response.send(message);
 
     } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * Create/save a new message.
-   * POST messages
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async storeTutor ({ request, response }) {
-    const {message_sent,tutor_id,reciever
-    } = request.post()
-    try{
-
-      const message = new Message(
-        tutor_id,
-        reciever,
-        message_sent
-      );
-
-      const ret_message = await message.registerMessageTutor(tutor_id);
-      response.status(201).send({message:ret_message})
-
-    }catch(error){
       throw error;
     }
   }
@@ -73,18 +48,19 @@ class MessageController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async storeVet ({ request, response }) {
-    const {message_sent,veterinary_id,reciever
+  async store ({ request, response }) {
+    const {message_sent,sender,reciever,selfsender
     } = request.post()
     try{
 
       const message = new Message(
-        veterinary_id,
+        sender,
         reciever,
-        message_sent
+        message_sent,
+        selfsender
       );
 
-      const ret_message = await message.registerMessageVet(veterinary_id);
+      const ret_message = await message.registerMessage();
       response.status(201).send({message:ret_message})
 
     }catch(error){
