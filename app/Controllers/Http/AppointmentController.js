@@ -1,6 +1,8 @@
 'use strict'
 
 const Appointment = use('App/Models/Appointment');
+const LineReaderSync = require("line-reader-sync");
+const { writeFileSync } = require('fs');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -98,6 +100,28 @@ class AppointmentController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+  }
+
+  async readFile({request, response}){
+    try {
+      const path = "tmp/01e04e3e-e09d-423a-af46-239c2599bff5-file.rem";
+      const lines = new LineReaderSync(path).toLines();
+
+      let txt = [];
+      let line = lines.shift();
+      while(line){
+
+        txt.push(line);
+        line = lines.shift();
+
+      }
+      console.log(txt);
+      writeFileSync("tmp/teste2.rem",txt.join('\n'));
+
+      return response.status(200).send({lines: lines})
+    } catch (error) {
+      throw error;
+    }
   }
 }
 
