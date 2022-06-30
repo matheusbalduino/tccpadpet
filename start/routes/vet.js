@@ -1,7 +1,8 @@
-'use strict'
+"use strict";
 
-const Route = use('Route')
+const Route = use("Route");
 
-Route.group(()=>{
-  Route.post('/store', 'VeterinaryController.store');
-}).prefix('/vet')
+Route.group(() => {
+  Route.post("/store", "VeterinaryController.store");
+  Route.put("/update/:id", "VeterinaryController.update").validator("/Vet");
+}).prefix("/vet");

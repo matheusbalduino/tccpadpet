@@ -5,7 +5,7 @@ const Schema = use('Schema')
 
 class AlterVeterinariesExpertiseSchema extends Schema {
   up () {
-    this.table('expertise', (table) => {
+    this.table('veterinaries', (table) => {
       // alter table
       table
           .integer('expertise_id')
@@ -18,9 +18,12 @@ class AlterVeterinariesExpertiseSchema extends Schema {
   }
 
   down () {
-    this.table('expertise', (table) => {
+    this.table("veterinaries", (table) => {
       // reverse alternations
-    })
+      this.dropForeign('expertise_id');
+      this.dropColumn('expertise_id');
+    });
+
   }
 }
 

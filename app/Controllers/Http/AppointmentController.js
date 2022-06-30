@@ -1,8 +1,8 @@
-'use strict'
+"use strict";
 
-const Appointment = use('App/Models/Appointment');
+const Appointment = use("App/Models/Appointment");
 const LineReaderSync = require("line-reader-sync");
-const { writeFileSync } = require('fs');
+const { writeFileSync } = require("fs");
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -21,9 +21,7 @@ class AppointmentController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
-
+  async index({ request, response, view }) {}
 
   /**
    * Create/save a new appointment.
@@ -33,25 +31,23 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store({ request, response }) {
     const data = request.only([
-      'appointment_date',
-      'annotation',
-      'case',
-      'description',
-      'treatment',
-      'return_appointment',
-      'tutor_id',
-      'veterinary_id',
-      'schedule_id'
+      "appointment_date",
+      "annotation",
+      "case",
+      "description",
+      "treatment",
+      "return_appointment",
+      "tutor_id",
+      "veterinary_id",
+      "schedule_id",
     ]);
 
     const appointment = await Appointment.create(data);
 
-    return response.status(200).send({appointment: appointment})
-
+    return response.status(200).send({ appointment: appointment });
   }
-
 
   /**
    * Update appointment details.
@@ -61,34 +57,32 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-    const {id} = params;
+  async update({ params, request, response }) {
+    const { id } = params;
     const data = request.only([
-      'appointment_date',
-      'annotation',
-      'case',
-      'description',
-      'treatment',
-      'return_appointment',
-      'tutor_id',
-      'veterinary_id',
-      'schedule_id'
+      "appointment_date",
+      "annotation",
+      "case",
+      "description",
+      "treatment",
+      "return_appointment",
+      "tutor_id",
+      "veterinary_id",
+      "schedule_id",
     ]);
-    try{
-      if(!data) throw new Error('Erro de dados');
+    try {
+      if (!data) throw new Error("Erro de dados");
 
       const appointment = await Appointment.find(id);
-      if(!appointment) throw new Error('Não existe consulta');
+      if (!appointment) throw new Error("Não existe consulta");
 
       appointment.merge(data);
       await appointment.save();
 
-      return response.send({appointment});
-
-    }catch(error){
+      return response.send({ appointment });
+    } catch (error) {
       throw error;
     }
-
   }
 
   /**
@@ -99,30 +93,27 @@ class AppointmentController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-  }
+  async destroy({ params, request, response }) {}
 
-  async readFile({request, response}){
+  async readFile({ request, response }) {
     try {
       const path = "tmp/01e04e3e-e09d-423a-af46-239c2599bff5-file.rem";
       const lines = new LineReaderSync(path).toLines();
 
       let txt = [];
       let line = lines.shift();
-      while(line){
-
+      while (line) {
         txt.push(line);
         line = lines.shift();
-
       }
       console.log(txt);
-      writeFileSync("tmp/teste2.rem",txt.join('\n'));
+      writeFileSync("tmp/teste2.rem", txt.join("\n"));
 
-      return response.status(200).send({lines: lines})
+      return response.status(200).send({ lines: lines });
     } catch (error) {
       throw error;
     }
   }
 }
 
-module.exports = AppointmentController
+module.exports = AppointmentController;
