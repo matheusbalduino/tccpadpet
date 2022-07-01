@@ -64,6 +64,13 @@ class TutorController {
         "password",
         "role",
         "profession",
+        "street",
+        "number",
+        "neighborhood",
+        "zip_code",
+        "city",
+        "state",
+        "country",
       ]);
 
       const tutor = await Tutor.findBy("id", id);
@@ -75,29 +82,29 @@ class TutorController {
       const trx = await Database.beginTransaction();
 
       try {
-        dataTutor.avatar = dataTutor.avatar ? dataTutor.avatar : tutor.avatar;
-        dataTutor.document = dataTutor.document
-          ? dataTutor.document
-          : tutor.document;
-        dataTutor.email = dataTutor.email ? dataTutor.email : tutor.email;
-        dataTutor.description = dataTutor.description
-          ? dataTutor.description
-          : tutor.description;
+
+        Object.keys(dataTutor).forEach((item) => {
+          if (
+            !!dataTutor[item] &&
+            dataTutor[item] != "" &&
+            dataTutor[item] !== tutor[item]
+          )
+            dataTutor[item] = dataTutor[item];
+          else delete dataTutor[item];
+        });
 
         tutor.merge(dataTutor);
         await tutor.save(trx);
 
-        dataUser.username = dataUser.username
-          ? dataUser.username
-          : user.username;
-        dataUser.password = dataUser.password
-          ? dataUser.password
-          : user.password;
-        dataUser.role = dataUser.role ? dataUser.role : user.role;
-        dataUser.profession = dataUser.profession
-          ? dataUser.profession
-          : user.profession;
-        dataUser.tutor_id = 3;
+        Object.keys(dataUser).forEach((item) => {
+          if (
+            !!dataUser[item] &&
+            dataUser[item] != "" &&
+            dataUser[item] !== user[item]
+          )
+            dataUser[item] = dataUser[item];
+          else delete dataUser[item];
+        });
 
         user.merge(dataUser);
         await user.save(trx);
@@ -108,7 +115,9 @@ class TutorController {
         throw error;
       }
 
-      return response.send({ updated: tutor });
+      return response.send({
+        updated: { ...tutor.toJSON(), ...user.toJSON() },
+      });
     } catch (error) {
       throw new HttpException(error.message, 400);
     }

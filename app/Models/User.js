@@ -19,6 +19,10 @@ class User extends Model {
         userInstance.password = await Hash.make(userInstance.password)
       }
     })
+
+    this.addHook('afterSave', async (userInstance) => {
+        userInstance.password = ""
+      })
   }
 
   /**

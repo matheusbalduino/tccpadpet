@@ -65,6 +65,7 @@ class VeterinaryController {
    */
   async update({ params, request, response }) {
     const { id } = params;
+    let user_ret;
     try {
       const trx = await Database.beginTransaction();
       const dataVet = request.only(["crmv", "expertise", "document", "email"]);
@@ -73,6 +74,13 @@ class VeterinaryController {
         "password",
         "role",
         "profession",
+        "street",
+        "number",
+        "neighborhood",
+        "zip_code",
+        "city",
+        "state",
+        "country",
       ]);
 
       const vet = await Vet.find(id);
@@ -81,11 +89,15 @@ class VeterinaryController {
       const user = await User.findBy("veterinary_id", id);
       if (!user) throw new Error();
 
-      dataVet.crmv = dataVet.crmv ? dataVet.crmv : delete dataVet.crmv;
-      dataVet.document = dataVet.document
-        ? dataVet.document
-        : delete dataVet.document;
-      dataVet.email = dataVet.email ? dataVet.email : delete dataVet.email;
+      Object.keys(dataVet).forEach((item) => {
+        if (
+          !!dataVet[item] &&
+          dataVet[item] != "" &&
+          dataVet[item] !== vet[item]
+        )
+          dataVet[item] = dataVet[item];
+        else delete dataVet[item];
+      });
 
       if (dataVet.expertise) {
         dataVet.expertise_id = dataVet.expertise;
@@ -99,26 +111,29 @@ class VeterinaryController {
         vet.merge(dataVet);
         await vet.save(trx);
 
-        dataUser.username = dataUser.username
-          ? dataUser.username
-          : delete dataUser.username;
-        dataUser.password = dataUser.password
-          ? dataUser.password
-          : delete dataUser.password;
-        dataUser.role = dataUser.role ? dataUser.role : delete dataUser.role;
-        dataUser.profession = dataUser.profession
-          ? dataUser.profession
-          : delete dataUser.profession;
+        Object.keys(dataUser).forEach((item) => {
+          if (
+            !!dataUser[item] &&
+            dataUser[item] != "" &&
+            dataUser[item] !== user[item]
+          )
+            dataUser[item] = dataUser[item];
+          else delete dataUser[item];
+        });
+
 
         user.merge(dataUser);
         await user.save(trx);
+
+        user_ret = user.toJSON();
+        delete user_ret.password;
 
         await trx.commit();
       } catch (error) {
         await trx.rollback();
         throw error;
       }
-      return response.send({ Updated: "updated" });
+      return response.send({ Updated: { ...user_ret, ...vet.toJSON() } });
     } catch (error) {
       throw error;
     }

@@ -4,5 +4,5 @@ const Route = use("Route");
 
 Route.group(() => {
   Route.post("/store", "VeterinaryController.store");
-  Route.put("/update/:id", "VeterinaryController.update").validator("/Vet");
+  Route.put("/update/:id", "VeterinaryController.update")//.validator("/Vet");
 }).prefix("/vet");
