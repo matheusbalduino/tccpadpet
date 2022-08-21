@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CadastroTutorComponent } from '../cadastros/cadastro-tutor/cadastro-tutor.component';
 import { IndexComponent } from './index.component';
-import { SliderComponent } from './slider/slider.component';
 
 const routes: Routes = [
-  { path: '', component: IndexComponent },
+  { path: '', component: IndexComponent,
+    children:[
+      { path:'cadastro', component: CadastroTutorComponent }
+    ],
+  }
 
 ];
 
