@@ -12,6 +12,9 @@ export class IndexComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    var largura = window.innerWidth || document.documentElement.clientWidth  || document.body.clientWidth;
+
+    if(largura < 800) this.openedsidebar = false;
   }
 
   OpenClose(){

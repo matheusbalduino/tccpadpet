@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MaterialModule } from 'material.module';
 import { CadastrosModule } from '../cadastros/cadastros.module';
+import { CadastroService } from '../Services/cadastro-service.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { CadastrosModule } from '../cadastros/cadastros.module';
     ReactiveFormsModule,
     MatNativeDateModule,
     MaterialModule,
-    FlexLayoutModule
-  ]
+    FlexLayoutModule,
+    HttpClientModule
+  ],
+  providers: [CadastroService],
 })
 export class IndexModule { }
