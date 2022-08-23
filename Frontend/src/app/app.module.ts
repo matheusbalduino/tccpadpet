@@ -7,10 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IndexModule } from './index/index.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TesteComponent } from './teste/teste.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TesteComponent
   ],
   imports: [
     BrowserModule,
