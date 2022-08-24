@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError } from 'rxjs';
 import { CadastroService } from 'src/app/Services/cadastro-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cadastro-tutor',
@@ -29,13 +30,17 @@ export class CadastroTutorComponent implements OnInit {
   /**yy
   * Constructor
   */
-  constructor(private cadastro: CadastroService, private fb: FormBuilder) { }
+  constructor(private cadastro: CadastroService, private fb: FormBuilder, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.index();
   }
 
   index(){
+   this.getUsers()
+  }
+
+  getUsers(){
     this.cadastro.getDataUsers().subscribe(( res: User[] ) => {
       this.dataSource = res.map( (item:User ) => {
         return {
@@ -57,17 +62,33 @@ export class CadastroTutorComponent implements OnInit {
       password: String(this.password.value),
     }
     if(
-      this.email.hasError('required') ||
-      this.first_name.hasError('required') ||
-      this.last_name.hasError('required') ||
-      this.username.hasError('required') ||
-      this.password.hasError('required') ||
+      !this.email.hasError('required') &&
+      !this.email.hasError('email') &&
+      !this.first_name.hasError('required') &&
+      !this.last_name.hasError('required') &&
+      !this.username.hasError('required') &&
+      !this.password.hasError('required') &&
       this.passwordEquals()
     ){
+      this.toastr.success('Usuário Criado', 'Sucesso', {
+        timeOut: 3000,
+      });
+      this.cadastro.postDataUser(user).subscribe((res)=> console.log(res));
+      setTimeout(()=>{
+        this.getUsers()
+      }, 300)
+    }
+    else if (!this.passwordEquals() ){
       console.log('error');
+      this.toastr.error('Senhas não conferem', 'Erro de Cadastro', {
+        timeOut: 3000,
+      });
     }
     else{
-      this.cadastro.postDataUser(user).subscribe((res)=> console.log(res));
+      console.log('error');
+      this.toastr.error('Dados Obrigatórios', 'Erro de Cadastro', {
+        timeOut: 3000,
+      });
     }
   }
 
@@ -99,7 +120,6 @@ export class CadastroTutorComponent implements OnInit {
     else return '';
   }
   getErrorConfirm(){
-
     if(this.confirm.hasError('required'))
       return 'Senha deve ser preenchido'
     else if(this.confirm !== this.password)
@@ -108,8 +128,10 @@ export class CadastroTutorComponent implements OnInit {
   }
 
   passwordEquals(){
-    if(this.confirm !== this.password)
+    if(this.confirm.value !== this.password.value){
+      console.log(this.confirm.value, this.password.value)
       return false;
+    }
     return true;
   }
 
