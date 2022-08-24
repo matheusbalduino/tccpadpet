@@ -11,9 +11,14 @@ export class CadastroService extends BaseService {
    }
 
    getDataUsers(): Observable<any>{
-    console.log('cheguei aqui')
-
     return this.http.get<any>( `${this.url}/users`, this.getHeaderJson()).pipe(
+      map(this.extractData),
+      catchError((error) => throwError(error))
+    )
+   }
+
+   postDataUser(value: any): Observable<any>{
+    return this.http.post<any>( `${this.url}/users`, value ,this.getHeaderJson()).pipe(
       map(this.extractData),
       catchError((error) => throwError(error))
     )

@@ -43,20 +43,31 @@ export class CadastroTutorComponent implements OnInit {
           first_name: item.first_name,
           last_name: item.last_name,
           username: item.username,
-          password: ''
         }
       })
     })
   }
 
   postUser(){
-    const user: User = {
+    const user: UserPost = {
       email: String(this.email.value),
-      first_name: String(this.first_name.value),
-      last_name: String(this.last_name.value),
+      firstName: String(this.first_name.value),
+      lastName: String(this.last_name.value),
       username: String(this.username.value),
       password: String(this.password.value),
-
+    }
+    if(
+      this.email.hasError('required') ||
+      this.first_name.hasError('required') ||
+      this.last_name.hasError('required') ||
+      this.username.hasError('required') ||
+      this.password.hasError('required') ||
+      this.passwordEquals()
+    ){
+      console.log('error');
+    }
+    else{
+      this.cadastro.postDataUser(user).subscribe((res)=> console.log(res));
     }
   }
 
@@ -88,8 +99,6 @@ export class CadastroTutorComponent implements OnInit {
     else return '';
   }
   getErrorConfirm(){
-    console.log(this.confirm)
-    console.log(this.password)
 
     if(this.confirm.hasError('required'))
       return 'Senha deve ser preenchido'
@@ -99,8 +108,6 @@ export class CadastroTutorComponent implements OnInit {
   }
 
   passwordEquals(){
-    console.log(this.confirm.value)
-    console.log(this.password.value)
     if(this.confirm !== this.password)
       return false;
     return true;
@@ -112,6 +119,14 @@ export interface User {
   email: string;
   first_name: string;
   last_name: string;
+  username: string;
+}
+
+
+export interface UserPost {
+  email: string;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
 }
