@@ -42,10 +42,22 @@ export class CadastroTutorComponent implements OnInit {
           email : item.email,
           first_name: item.first_name,
           last_name: item.last_name,
-          username: item.username
+          username: item.username,
+          password: ''
         }
       })
     })
+  }
+
+  postUser(){
+    const user: User = {
+      email: String(this.email.value),
+      first_name: String(this.first_name.value),
+      last_name: String(this.last_name.value),
+      username: String(this.username.value),
+      password: String(this.password.value),
+
+    }
   }
 
   getErrorsEmail(){
@@ -87,8 +99,8 @@ export class CadastroTutorComponent implements OnInit {
   }
 
   passwordEquals(){
-    console.log(this.confirm)
-    console.log(this.password)
+    console.log(this.confirm.value)
+    console.log(this.password.value)
     if(this.confirm !== this.password)
       return false;
     return true;
@@ -98,8 +110,9 @@ export class CadastroTutorComponent implements OnInit {
 
 export interface User {
   email: string;
-  first_name: number;
-  last_name: number;
+  first_name: string;
+  last_name: string;
   username: string;
+  password: string;
 }
 
