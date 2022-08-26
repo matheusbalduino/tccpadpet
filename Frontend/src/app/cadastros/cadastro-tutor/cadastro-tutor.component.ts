@@ -18,16 +18,9 @@ export class CadastroTutorComponent implements OnInit {
   hide2 = true;
   displayedColumns: string[] = ['email', 'first_name', 'last_name', 'username'];
   dataSource: User[] = [];
+  registerTutor: FormGroup;
 
-  /** Users data */
-  email = new FormControl('', [Validators.required, Validators.email]);
-  first_name = new FormControl('', [Validators.required]);
-  last_name = new FormControl('', [Validators.required]);
-  username = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required, Validators.min(6)]);
-  confirm = new FormControl('', [Validators.required, Validators.min(6)]);
-
-  /**yy
+  /**
   * Constructor
   */
   constructor(private cadastro: CadastroService, private fb: FormBuilder, private toastr: ToastrService) { }
@@ -36,15 +29,15 @@ export class CadastroTutorComponent implements OnInit {
     this.index();
   }
 
-  index(){
-   this.getUsers()
+  index() {
+    this.getUsers()
   }
 
-  getUsers(){
-    this.cadastro.getDataUsers().subscribe(( res: User[] ) => {
-      this.dataSource = res.map( (item:User ) => {
+  getUsers() {
+    this.cadastro.getDataUsers().subscribe((res: User[]) => {
+      this.dataSource = res.map((item: User) => {
         return {
-          email : item.email,
+          email: item.email,
           first_name: item.first_name,
           last_name: item.last_name,
           username: item.username,
@@ -53,87 +46,31 @@ export class CadastroTutorComponent implements OnInit {
     })
   }
 
-  postUser(){
-    const user: UserPost = {
-      email: String(this.email.value),
-      firstName: String(this.first_name.value),
-      lastName: String(this.last_name.value),
-      username: String(this.username.value),
-      password: String(this.password.value),
-    }
-    if(
-      !this.email.hasError('required') &&
-      !this.email.hasError('email') &&
-      !this.first_name.hasError('required') &&
-      !this.last_name.hasError('required') &&
-      !this.username.hasError('required') &&
-      !this.password.hasError('required') &&
-      this.passwordEquals()
-    ){
-      this.toastr.success('Usuário Criado', 'Sucesso', {
-        timeOut: 3000,
-      });
-      this.cadastro.postDataUser(user).subscribe((res)=> console.log(res));
-      setTimeout(()=>{
-        this.getUsers()
-      }, 300)
-    }
-    else if (!this.passwordEquals() ){
-      console.log('error');
-      this.toastr.error('Senhas não conferem', 'Erro de Cadastro', {
-        timeOut: 3000,
-      });
-    }
-    else{
-      console.log('error');
-      this.toastr.error('Dados Obrigatórios', 'Erro de Cadastro', {
-        timeOut: 3000,
-      });
-    }
+  postUser() {
+    // if (false) {
+    //   this.toastr.success('Usuário Criado', 'Sucesso', {
+    //     timeOut: 3000,
+    //   });
+    //   this.cadastro.postDataUser().subscribe((res) => console.log(res));
+    //   setTimeout(() => {
+    //     this.getUsers()
+    //   }, 300)
+    // }
+    // else if (false) {
+    //   console.log('error');
+    //   this.toastr.error('Senhas não conferem', 'Erro de Cadastro', {
+    //     timeOut: 3000,
+    //   });
+    // }
+    // else {
+    //   console.log('error');
+    //   this.toastr.error('Dados Obrigatórios', 'Erro de Cadastro', {
+    //     timeOut: 3000,
+    //   });
+    // }
   }
 
-  getErrorsEmail(){
-    if (this.email.hasError('required'))
-      return 'E-mail deve ser preenchido';
-    else if (this.email.hasError('email'))
-      return 'E-mail Inválido'
-    else return '';
-  }
-  getErrorUserName(){
-    if(this.username.hasError('required'))
-      return 'Usuário deve ser preenchido'
-    else return '';
-  }
-  getErrorFirstName(){
-    if(this.first_name.hasError('required'))
-     return 'Primeiro Nome deve ser preenchido'
-    else return '';
-  }
-  getErrorLastName(){
-    if(this.first_name.hasError('required'))
-     return 'Último Nome deve ser preenchido'
-    else return '';
-  }
-  getErrorPassword(){
-    if(this.password.hasError('required'))
-      return 'Senha deve ser preenchido'
-    else return '';
-  }
-  getErrorConfirm(){
-    if(this.confirm.hasError('required'))
-      return 'Senha deve ser preenchido'
-    else if(this.confirm !== this.password)
-      return 'Senhas não conferem'
-    else return '';
-  }
 
-  passwordEquals(){
-    if(this.confirm.value !== this.password.value){
-      console.log(this.confirm.value, this.password.value)
-      return false;
-    }
-    return true;
-  }
 
 }
 
