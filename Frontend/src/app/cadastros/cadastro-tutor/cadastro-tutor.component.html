@@ -5,59 +5,39 @@
     <div class="col-md-6">
       <mat-form-field appearance="standard">
         <mat-label>Nome Usuário</mat-label>
-        <input matInput formControlName="tipoTitular" required>
-        <mat-error *ngIf="username.invalid">{{getErrorUserName()}}</mat-error>
+        <input matInput formControlName="avatar">
       </mat-form-field>
     </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label>Documento (CPF)</mat-label>
+        <input id='document' matInput type="text" formControlName="document" required>
+        <mat-error *ngIf="tutorErrors['document']">
+          <p [innerHTML]="displayMessage['document']"></p>
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-6">
       <mat-form-field appearance="standard">
         <mat-label>E-mail</mat-label>
-        <input matInput [formControl] = "email" required>
-        <mat-error *ngIf="email.invalid">{{getErrorsEmail()}}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <mat-form-field appearance="standard">
-        <mat-label>Primeiro Nome</mat-label>
-        <input matInput [formControl] = "first_name" required>
-        <mat-error *ngIf="first_name.invalid">{{getErrorFirstName()}}</mat-error>
+        <input matInput formControlName="email" required>
+        <mat-error *ngIf="tutorErrors.email">
+          <p [innerHTML]="displayMessage['email']"></p>
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field appearance="standard">
-        <mat-label>Último Nome</mat-label>
-        <input matInput [formControl] = "last_name" required>
-        <mat-error *ngIf="last_name.invalid">{{getErrorLastName()}}</mat-error>
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <mat-form-field appearance="standard">
-        <mat-label>Senha</mat-label>
-        <input matInput [type]="hide1 ? 'password' : 'text'" [formControl]="password" required>
-        <mat-error *ngIf="password.invalid">{{getErrorPassword()}}</mat-error>
-        <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
-          <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-      </mat-form-field>
-    </div>
-    <div class="col-md-6">
-      <mat-form-field appearance="standard">
-        <mat-label>Confirma Senha</mat-label>
-        <input matInput [type]="hide2 ? 'password' : 'text'" [formControl]="confirm">
-        <mat-error *ngIf="confirm.invalid">{{getErrorConfirm()}}</mat-error>
-        <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide2">
-          <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
+        <mat-label>Descrição</mat-label>
+        <input matInput formControlName="description">
       </mat-form-field>
     </div>
   </div>
   <div class="row mt-1">
     <div class="col-md-12"  style="text-align: end;" >
-      <button style="width: 100%;" mat-raised-button (click)="postUser()" > Enviar </button>
+      <button style="width: 100%;" type="submit" [disabled]="!registerTutor.valid" mat-raised-button (click)="postUser()" > Enviar </button>
     </div>
   </div>
 </form>
