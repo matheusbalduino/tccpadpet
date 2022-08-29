@@ -26,6 +26,7 @@ class TutorController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
+    const trx = await Database.beginTransaction();
     const data = request.only(["avatar", "document", "email", "description"]);
 
     const dataUser = request.only([
@@ -34,19 +35,27 @@ class TutorController {
       "role",
       "profession",
     ]);
-
+    const user = {};
     try {
-      const tutor = await Tutor.create(data);
+      const tutor = await Tutor.create(data, trx);
 
-      const user = await tutor.user().create(dataUser);
+      if(!dataUser.profession) dataUser.profession = 'Outro';
 
-      return response.send({
-        User: user,
-        Tutor: tutor,
-      });
+      user.user = await tutor.user().create(dataUser, trx);
+      user.tutor = tutor;
+
+      await trx.commit()
+
     } catch (error) {
-      throw error;
+      await trx.rollback();
     }
+
+    return response.send({
+      User: user.user,
+      Tutor: user.tutor,
+    });
+
+
   }
 
   async update({ request, response, params }) {

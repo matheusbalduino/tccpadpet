@@ -4,10 +4,9 @@ class User {
   get rules () {
     return {
       username: 'required|string|unique:users',
-      email: 'required|email|unique:users',
+      email: 'required|email|unique:tutors  ',
       password: 'required|string',
-      document: 'required|string|unique:users',
-      profession: 'required|string'
+      document: 'required|string|unique:tutors',
     }
   }
 
@@ -20,7 +19,6 @@ class User {
       'email.unique': 'Erro ao registrar o email',
       'document.unique': 'Erro ao registrar documento',
       'username.unique': 'Erro ao registrar username',
-      'profession.required': 'Profissão é obrigatório'
     }
   }
 

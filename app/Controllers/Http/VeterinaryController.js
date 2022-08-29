@@ -32,6 +32,7 @@ class VeterinaryController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
+    const trx = await Database.beginTransaction()
     const data = request.only(["crmv", "email", "document", "expertise_id"]);
 
     const dataUser = request.only([
@@ -40,19 +41,26 @@ class VeterinaryController {
       "profession",
       "role",
     ]);
-
+    const vets = {}
     try {
-      const vet = await Vet.create(data);
 
-      const user = await vet.user().create(dataUser);
+      if(!dataUser.profession) dataUser.profession = 'Veterinário';
+      const vet = await Vet.create(data, trx);
 
-      return response.send({
-        User: user,
-        Vet: vet,
-      });
+      const user = await vet.user().create(dataUser, trx);
+      vets.vet = vet;
+      vets.user = user;
+      await trx.commit();
+
     } catch (error) {
+      await trx.rollback();
       throw error;
     }
+
+    return response.send({
+      User: vets.vet,
+      Vet: vets.user,
+    });
   }
 
   /**

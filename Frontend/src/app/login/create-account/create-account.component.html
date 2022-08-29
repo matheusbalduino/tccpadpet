@@ -1,18 +1,32 @@
 <div class="login-page">
   <div class="form">
-    <form class="register-form">
-      <input type="text" placeholder="Nome Usuário"/>
-      <input type="password" placeholder="Senha"/>
-      <input type="text" placeholder="E-mail"/>
-      <section class="example-section">
-        <label class="example-margin">Veterinário:</label>
-        <mat-radio-group [(ngModel)]="labelPosition">
-          <mat-radio-button class="example-margin" value="vet"> Sim </mat-radio-button>
-          <mat-radio-button class="example-margin" value="tutor"> Não </mat-radio-button>
-        </mat-radio-group>
-      </section>
-      <button (click)="registerUser()">create</button>
+    <form class="register-form" [formGroup]="registerTutor">
+
+      <input type="text" placeholder="Nome Usuário" formControlName="username" required/>
+      <span class="warning" [innerHTML]="displayMessage['username']" *ngIf="tutorErrors['username']"></span>
+
+      <input type="password" placeholder="Senha" formControlName="password" required/>
+      <span class="warning" [innerHTML]="displayMessage['password']" *ngIf="tutorErrors['password']"></span>
+
+      <input type="text" placeholder="E-mail" formControlName="email"required/>
+      <span class="warning" [innerHTML]="displayMessage['email']" *ngIf="tutorErrors['email']"></span>
+
+      <input type="text" placeholder="CPF" formControlName="document" autocomplete="off" required/>
+      <span class="warning" [innerHTML]="displayMessage['document']" *ngIf="tutorErrors['document']"></span>
+
+      <mat-card style="margin-bottom: 15px;">
+        <section class="example-section">
+          <label class="example-margin">Veterinário:</label>
+          <mat-radio-group name="tipouser" formControlName="usertype">
+            <mat-radio-button class="example-margin" value="vet"> Sim </mat-radio-button>
+            <mat-radio-button class="example-margin" value="tutor"> Não </mat-radio-button>
+          </mat-radio-group>
+        </section>
+      <span class="warning" [innerHTML]="displayMessage['usertype']" *ngIf="tutorErrors['usertype']"></span>
+      </mat-card>
+      <button type="submit"  [disabled]="!registerTutor.valid" (click)="registerUser()">create</button>
       <p class="message" >Já se registrou? <a style="cursor: pointer;" [routerLink]="['/']">Login</a></p>
     </form>
+
   </div>
 </div>
