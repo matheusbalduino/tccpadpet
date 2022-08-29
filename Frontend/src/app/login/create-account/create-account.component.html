@@ -1,0 +1,18 @@
+<div class="login-page">
+  <div class="form">
+    <form class="register-form">
+      <input type="text" placeholder="Nome Usuário"/>
+      <input type="password" placeholder="Senha"/>
+      <input type="text" placeholder="E-mail"/>
+      <section class="example-section">
+        <label class="example-margin">Veterinário:</label>
+        <mat-radio-group [(ngModel)]="labelPosition">
+          <mat-radio-button class="example-margin" value="vet"> Sim </mat-radio-button>
+          <mat-radio-button class="example-margin" value="tutor"> Não </mat-radio-button>
+        </mat-radio-group>
+      </section>
+      <button (click)="registerUser()">create</button>
+      <p class="message" >Já se registrou? <a style="cursor: pointer;" [routerLink]="['/']">Login</a></p>
+    </form>
+  </div>
+</div>

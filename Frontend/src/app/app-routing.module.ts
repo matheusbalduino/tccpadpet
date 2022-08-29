@@ -1,13 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
+import { CreateAccountComponent } from './login/create-account/create-account.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
+  {
+    path:'', component: LoginComponent
+  },
+  {
+    path:'createaccount', component: CreateAccountComponent
+  },
   { path: 'index',
    loadChildren: () => import('./index/index.module').then(m => m.IndexModule)
   },
   {
     path:'',
-    redirectTo:'index',
+    redirectTo:'',
     pathMatch: 'full',
   }
 ];

@@ -8,18 +8,26 @@ import { IndexModule } from './index/index.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginComponent } from './login/login.component';
+import { CreateAccountComponent } from './login/create-account/create-account.component';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from 'material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    CreateAccountComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     IndexModule,
+    MaterialModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
