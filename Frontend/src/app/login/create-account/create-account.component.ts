@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
-import { FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fromEvent, merge, Observable } from 'rxjs';
 import { CadastroService } from 'src/app/Services/cadastro-service.service';
@@ -21,14 +21,18 @@ export class CreateAccountComponent implements OnInit, AfterViewInit {
   validationMessages: ValidationMessages;
   genericValidator: GenericValidator;
   displayMessage:DisplayMessage = {};
+
   user: any = { };
+  crmv: boolean;
+
 
   tutorErrors: any = {
     document: false,
     email: false,
     password:false,
     username:false,
-    usertype:false
+    usertype:false,
+    crmv: false
   };
 
   constructor(private router: Router, private fb: FormBuilder, private cadastro: CadastroService) {
@@ -71,8 +75,18 @@ export class CreateAccountComponent implements OnInit, AfterViewInit {
   }
 
   registerUser(){
+    console.log(this.registerTutor)
     this.user = Object.assign(this.user, this.registerTutor.value)
     this.user.role = "tutor"
+
+    if(this.user.usertype === 'vet'){
+      this.user.role = "Vet"
+      if(!existsValue(this.user.crmv)){
+        this.tutorErrors.crmv = true;
+        this.displayMessage['crmv'] = 'Informe seu CRMV <br/>';
+        return
+      }
+    }
     console.log(this.user)
     this.cadastro.postDataUser(this.user.usertype, this.user).subscribe( res => {
       console.log(res)
@@ -89,11 +103,11 @@ export class CreateAccountComponent implements OnInit, AfterViewInit {
         document: ["",[Validators.required]],
         email: ["",[Validators.required]],
         password: ["", [Validators.required]],
-        usertype: ["", [Validators.required]]
+        usertype: ["", [Validators.required]],
+        crmv: [""]
       });
     } catch (error) {
       console.log(error)
     }
   }
-
 }

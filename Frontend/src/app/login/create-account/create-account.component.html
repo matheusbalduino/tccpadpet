@@ -17,14 +17,18 @@
       <mat-card style="margin-bottom: 15px;">
         <section class="example-section">
           <label class="example-margin">Veterinário:</label>
-          <mat-radio-group name="tipouser" formControlName="usertype">
+          <mat-radio-group name="tipouser" formControlName="usertype" >
             <mat-radio-button class="example-margin" value="vet"> Sim </mat-radio-button>
             <mat-radio-button class="example-margin" value="tutor"> Não </mat-radio-button>
           </mat-radio-group>
         </section>
       <span class="warning" [innerHTML]="displayMessage['usertype']" *ngIf="tutorErrors['usertype']"></span>
       </mat-card>
-      <button type="submit"  [disabled]="!registerTutor.valid" (click)="registerUser()">create</button>
+
+      <input *ngIf="registerTutor.value['usertype'] === 'vet'" type="text" placeholder="crmv" formControlName="crmv" autocomplete="off" required/>
+      <span class="warning" [innerHTML]="displayMessage['crmv']" *ngIf="tutorErrors['crmv']"></span>
+
+      <button type="submit"  [disabled]="!registerTutor.valid" (click)="registerUser()">Criar</button>
       <p class="message" >Já se registrou? <a style="cursor: pointer;" [routerLink]="['/']">Login</a></p>
     </form>
 
