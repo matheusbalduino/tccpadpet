@@ -3,7 +3,7 @@
     <form class="login-form">
       <input type="text" placeholder="Nome Usuário"/>
       <input type="password" placeholder="Senha"/>
-      <button>login</button>
+      <button (click)="login()" >login</button>
       <p class="message">Não tem registro? <a [routerLink]="['/createaccount']">Criar uma conta</a></p>
     </form>
   </div>

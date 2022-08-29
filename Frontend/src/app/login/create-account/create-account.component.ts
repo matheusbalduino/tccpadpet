@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-account',
@@ -9,7 +10,7 @@ export class CreateAccountComponent implements OnInit {
 
   labelPosition: 'vet' | 'tutor' = 'tutor';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     console.log(this.labelPosition);
@@ -17,6 +18,7 @@ export class CreateAccountComponent implements OnInit {
 
   registerUser(){
     console.log('ola', this.labelPosition);
+    this.router.navigate(['/'])
   }
 
 }
