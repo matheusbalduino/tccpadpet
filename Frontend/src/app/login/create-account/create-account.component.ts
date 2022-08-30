@@ -76,6 +76,7 @@ export class CreateAccountComponent implements OnInit, AfterViewInit {
 
   registerUser(){
     console.log(this.registerTutor)
+    console.log(this.registerTutor)
     this.user = Object.assign(this.user, this.registerTutor.value)
     this.user.role = "tutor"
 
