@@ -4,6 +4,7 @@ const { HttpException } = use("@adonisjs/generic-exceptions");
 const Tutor = use("App/Models/Tutor");
 const User = use("App/Models/User");
 const Database = use("Database");
+const Helpers = use('Helpers');
 
 class TutorController {
   /**
@@ -129,6 +130,48 @@ class TutorController {
       });
     } catch (error) {
       throw new HttpException(error.message, 400);
+    }
+  }
+
+  /**
+   * Uploa Image and update table tutor with the image name.
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async uploadImage({request, params, response}){
+    try {
+      const tutor = await Tutor.findOrFail(params.id);
+
+      const imgProfile = request.file('profile_pic', {
+        types: ['image'],
+        size: '2mb'
+      })
+
+      // Makes the name based in the date
+      var name = imgProfile.clientName
+      var ext = name.split('.')[1]
+      var ts = new Date().valueOf()
+      var fileName = ts + '.' + ext;
+
+      const img = await imgProfile.move(Helpers.publicPath('uploads'),{
+        name: fileName
+      })
+
+      if(!imgProfile.moved()) return imgProfile.error();
+
+      tutor.avatar = imgProfile.fileName;
+      await tutor.save();
+      // update more list of images
+      // await Promise.all(
+      //   imgProfile.movedList().map( img => imgProfile().create({ path: img.fileName }))
+      // )
+
+      return response.status(200).send(tutor);
+
+    } catch (error) {
+
     }
   }
 }
