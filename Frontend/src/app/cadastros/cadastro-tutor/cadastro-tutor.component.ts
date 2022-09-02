@@ -6,15 +6,16 @@ import { ToastrService } from 'ngx-toastr';
 import { Tutor } from 'src/app/interfaces/user';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/validators/generic-form-validation';
 import { existsValue } from 'src/app/utils/stringUtils';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cadastro-tutor',
   templateUrl: './cadastro-tutor.component.html',
   styleUrls: ['./cadastro-tutor.component.scss']
 })
-export class CadastroTutorComponent implements OnInit, AfterViewInit{
+export class CadastroTutorComponent implements OnInit, AfterViewInit {
 
-  @ViewChildren(FormControlName, {read: ElementRef}) formInputElements:ElementRef[];
+  @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[];
   /**
   * VARIABLES
   */
@@ -29,15 +30,17 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit{
     email: true
   };
 
+  baseUrl = environment.baseUrl;
+
   /**
   * Constructor
   */
   constructor(private cadastro: CadastroService, private fb: FormBuilder, private toastr: ToastrService) {
     this.validationMessages = {
-      document:{
-        required:'Informe seu documento'
+      document: {
+        required: 'Informe seu documento'
       },
-      email:{
+      email: {
         required: 'Informe seu email'
       }
     }
@@ -46,7 +49,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit{
 
   validationMessages: ValidationMessages;
   genericValidator: GenericValidator;
-  displayMessage:DisplayMessage = {};
+  displayMessage: DisplayMessage = {};
   changeNotSave: boolean;
 
   ngOnInit(): void {
@@ -55,14 +58,14 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit(): void {
 
-    let controlBlurs: Observable <any>[] = this.formInputElements
-    .map((formControl:ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
+    let controlBlurs: Observable<any>[] = this.formInputElements
+      .map((formControl: ElementRef) => fromEvent(formControl.nativeElement, 'blur'));
 
     merge(...controlBlurs).subscribe(() => {
       this.displayMessage = this.genericValidator.processarMensagens(this.registerTutor);
       this.changeNotSave = true;
-      Object.keys(this.displayMessage).forEach((item:string)=>{
-        if(existsValue(this.displayMessage[item])) this.tutorErrors[item] = true
+      Object.keys(this.displayMessage).forEach((item: string) => {
+        if (existsValue(this.displayMessage[item])) this.tutorErrors[item] = true
       })
     })
   }
@@ -84,7 +87,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit{
     // })
   }
 
- postUser() {
+  postUser() {
     // if (false) {
     //   this.toastr.success('Usuário Criado', 'Sucesso', {
     //     timeOut: 3000,
@@ -107,7 +110,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit{
     //   });
     // }
     this.toastr.success('Usuário Criado', 'Sucesso', {
-    timeOut: 3000
+      timeOut: 3000
     })
     this.tutorSend = Object.assign(this.tutorSend, this.registerTutor.value)
     console.log(this.tutorSend)
@@ -115,12 +118,12 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit{
 
   }
 
-  validateForm():void{
+  validateForm(): void {
     try {
       this.registerTutor = this.fb.group({
         avatar: [""],
-        document: ["",[Validators.required]],
-        email: ["",[Validators.required]],
+        document: ["", [Validators.required]],
+        email: ["", [Validators.required]],
         description: [""]
       });
     } catch (error) {

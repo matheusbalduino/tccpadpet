@@ -17,6 +17,24 @@ class TutorController {
    * @param {View} ctx.view
    */
   async index({ request, response, view }) {}
+ /**
+   * Show a list of one tutor.
+   * GET schedules
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async show({request, response, params}){
+    const tutor = await Tutor.findOrFail(params.id);
+    response.send(tutor);
+  }
+
+  async showimage({response, params}){
+
+    return response.download(Helpers.publicPath(`uploads/${params.path}`))
+  }
 
   /**
    * Create/save a new schedule.

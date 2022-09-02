@@ -23,4 +23,5 @@ export class CadastroService extends BaseService {
       catchError((error) => throwError(error))
     )
    }
+
 }
