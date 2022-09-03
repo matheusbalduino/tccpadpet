@@ -2,16 +2,19 @@
 
 //#region
 const User = use("App/Models/User")
+
+/** @type {import('@adonisjs/framework/src/Hash')} */
+const Hash = use('Hash')
 //#endregion
 
 class UserController {
   async store({request}){
     const data = request.only([
       "username",
-      "email",
       "password",
-      "document",
-      "profession"]);
+      "profession",
+      "role"
+    ]);
 
     const user = await User.create(data)
 
@@ -19,9 +22,18 @@ class UserController {
   }
 
   async login({request, auth, response}){
-    const { email, password } = request.all();
+    const { username, password } = request.all();
+    console.log(auth)
 
-    const token = await auth.attempt(email, password)
+    await auth.attempt(username, password)
+
+    const user = await User.query()
+      .where('username', username)
+      .first();
+
+    console.log(user);
+
+    const token = await auth.generate(user, true)
 
     return response.send({credentials: token})
 

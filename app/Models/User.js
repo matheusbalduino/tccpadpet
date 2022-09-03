@@ -20,6 +20,12 @@ class User extends Model {
       }
     })
 
+    this.addHook('afterFetch', async (userInstance) => {
+      if (userInstance.dirty.password) {
+        userInstance.password = ""
+      }
+    })
+
     this.addHook('afterSave', async (userInstance) => {
         userInstance.password = ""
       })

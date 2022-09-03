@@ -3,6 +3,7 @@
 const Route = use("Route");
 
 Route.group(() => {
-  Route.post("/store", "VeterinaryController.store");
   Route.put("/update/:id", "VeterinaryController.update")//.validator("/Vet");
-}).prefix("/vet");
+}).prefix("/vet").middleware(['auth', 'vet']);
+
+Route.post("vet/store", "VeterinaryController.store").middleware('auth');
