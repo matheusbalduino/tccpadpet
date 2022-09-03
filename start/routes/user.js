@@ -5,6 +5,6 @@ const Route = use('Route')
 
 Route.group(()=>{
   Route.post('/store','UserController.store').validator('/User');
-  Route.get('/login', 'UserController.login')
+  Route.post('/login', 'UserController.login')
 }).prefix('/user').middleware('guest');
 

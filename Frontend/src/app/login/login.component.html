@@ -1,8 +1,8 @@
 <div class="login-page">
   <div class="form">
     <form class="login-form">
-      <input type="text" placeholder="Nome Usuário"/>
-      <input type="password" placeholder="Senha"/>
+      <input type="text" placeholder="Nome Usuário" [(ngModel)]="user.username" name="username"/>
+      <input type="password" placeholder="Senha"  [(ngModel)]="user.password" name="password"/>
       <button (click)="login()" >login</button>
       <p class="message">Não tem registro? <a [routerLink]="['/createaccount']">Criar uma conta</a></p>
     </form>
