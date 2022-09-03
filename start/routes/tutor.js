@@ -9,4 +9,4 @@ Route.group(()=>{
   Route.get('/image/:path', 'TutorController.showimage')
 }).prefix('tutor').middleware(['auth', 'tutor']);
 
-Route.post('tutor/store', 'TutorController.store').validator('User').middleware('auth');
+Route.post('tutor/store', 'TutorController.store').validator('User');
