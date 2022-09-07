@@ -12,6 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { CreateAccountComponent } from './login/create-account/create-account.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { InterceptorModule } from './interceptors/interceptor.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { MaterialModule } from 'material.module';
     BrowserAnimationsModule,
     IndexModule,
     MaterialModule,
+    HttpClientModule,
+    InterceptorModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
