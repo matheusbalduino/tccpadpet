@@ -15,7 +15,7 @@ export class LoginServiceService extends BaseService {
    login( user:any ):Observable<any>{
     return this.http.post( `${this.url}/user/login`, user, this.getHeaderJson()).pipe(
       map(this.extractData),
-      catchError((error) => (error))
+      catchError((error) => error)
     )
    }
 }

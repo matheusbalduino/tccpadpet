@@ -22,6 +22,7 @@ class UserController {
   }
 
   async login({request, auth, response}){
+    console.log('entrei')
     const { username, password } = request.all();
     console.log(auth)
 
