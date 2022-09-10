@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { InterceptorModule } from './interceptors/interceptor.module';
+import { SignedinGuard } from './signedin.guard';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { InterceptorModule } from './interceptors/interceptor.module';
       progressBar: true
     }),
   ],
-  providers: [],
+  providers: [ SignedinGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

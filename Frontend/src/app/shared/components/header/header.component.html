@@ -32,7 +32,7 @@
             <mat-icon>person_outline</mat-icon>
           </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item [routerLink]="['/']">
+              <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
                 sign out
               </button>

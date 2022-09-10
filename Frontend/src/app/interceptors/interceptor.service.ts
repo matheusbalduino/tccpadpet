@@ -12,18 +12,14 @@ export class Interceptor implements HttpInterceptor {
    }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    console.log(req)
-
-    // req = req.clone({
-    //   setHeaders:{
-    //     Authorization: `Bearer ${this.token}`
-    //   }
-    // })
-
+    const end_point = req.url.slice(req.url.indexOf('/user/login'), req.url.length)
+    if(end_point !== '/user/login' ){
+      req = req.clone({
+        setHeaders:{
+          Authorization: `Bearer ${this.token}`
+        }
+      })
+    }
     return next.handle(req)
-
   }
-
-
 }

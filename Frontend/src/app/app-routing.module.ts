@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateAccountComponent } from './login/create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
+import { SignedinGuard } from './signedin.guard';
 
 const routes: Routes = [
   {
@@ -11,7 +12,8 @@ const routes: Routes = [
     path:'createaccount', component: CreateAccountComponent
   },
   { path: 'index',
-   loadChildren: () => import('./index/index.module').then(m => m.IndexModule)
+   loadChildren: () => import('./index/index.module').then(m => m.IndexModule),
+   canActivate: [SignedinGuard]
   },
   {
     path:'',

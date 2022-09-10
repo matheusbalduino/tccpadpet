@@ -20,30 +20,20 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-// this.loginService.login(this.user).subscribe({
-    //   next(res: any){
-    //     console.log(res)
-
-    //   },
-    //   error(error){
-    //     console.log(error)
-    //   }
-    // });
 
   login():void {
-
-    this.loginService.login(this.user).subscribe(
-      (res: any) =>{
-        console.log(res);
-        sessionStorage.setItem('token', res.token)
+    console.log(this.user)
+    this.loginService.login(this.user).subscribe({
+      next: (res: any) =>{
+        sessionStorage.setItem('token', res.credentials.token)
         this.router.navigate(['/index'])
       },
-      error => {
+      error: error => {
         this.toastr.error('Erro de Login', 'Error', {
               timeOut: 3000,
         });
-        console.log(error)
-      }
+        console.log('error',error)
+      }}
     );
   }
 }

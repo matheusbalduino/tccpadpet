@@ -22,17 +22,12 @@ class UserController {
   }
 
   async login({request, auth, response}){
-    console.log('entrei')
     const { username, password } = request.all();
-    console.log(auth)
-
     await auth.attempt(username, password)
 
     const user = await User.query()
       .where('username', username)
       .first();
-
-    console.log(user);
 
     const token = await auth.generate(user, true)
 

@@ -8,13 +8,22 @@ import { BaseService } from './base-service.service';
 })
 export class LoginServiceService extends BaseService {
 
+  isLoggedIn: boolean = false;
+
   constructor(private http: HttpClient) {
     super();
+    this.isLoggedIn = sessionStorage.getItem('logged') === 'true'? true : false;
    }
 
    login( user:any ):Observable<any>{
     return this.http.post( `${this.url}/user/login`, user, this.getHeaderJson()).pipe(
-      map(this.extractData),
+      map((response: any ) =>{
+        if(response.credentials.token){
+          sessionStorage.setItem('logged', 'true');
+          this.isLoggedIn = true;
+        }
+        return response || null;
+      }),
       catchError((error) => error)
     )
    }
