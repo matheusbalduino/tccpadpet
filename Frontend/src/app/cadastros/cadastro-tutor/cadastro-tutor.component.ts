@@ -28,12 +28,15 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
     email: true
   };
 
+  user:string;
+
   baseUrl = environment.baseUrl;
 
   /**
   * Constructor
   */
   constructor(private cadastro: CadastroService, private fb: FormBuilder, private toastr: ToastrService) {
+    this.user = sessionStorage.getItem('role') || "";
     this.validationMessages = {
       document: {
         required: 'Informe seu documento'
@@ -76,7 +79,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
   postUser() {
     this.tutorSend = Object.assign(this.tutorSend, this.registerTutor.value)
     console.log(this.tutorSend)
-    this.cadastro.updateUser("tutor",  this.tutorSend).subscribe(
+    this.cadastro.updateUser(this.user,  this.tutorSend).subscribe(
       {
         next: (res) => {
           console.log(res);
@@ -97,7 +100,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
   }
 
   showUser(){
-    this.cadastro.getUser("tutor").subscribe({
+    this.cadastro.getUser(this.user).subscribe({
       next: (res) => {
         console.log(res)
         this.registerTutor.setValue({
