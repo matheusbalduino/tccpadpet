@@ -15,6 +15,7 @@ export class SignedinGuard implements CanActivate {
       {
         return true;
       }
+
       this.toastr.error('Não autorizado', 'Autorização',{
         timeOut:3000
       })

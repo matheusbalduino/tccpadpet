@@ -31,7 +31,7 @@ class UserController {
 
     const token = await auth.generate(user, true)
 
-    return response.send({credentials: token})
+    return response.send({credentials: token, role: user.role})
 
   }
 }

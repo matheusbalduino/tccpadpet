@@ -25,8 +25,9 @@ export class LoginComponent implements OnInit {
     console.log(this.user)
     this.loginService.login(this.user).subscribe({
       next: (res: any) =>{
-        sessionStorage.setItem('token', res.credentials.token)
-        this.router.navigate(['/index'])
+        sessionStorage.setItem('token', res.credentials.token),
+        sessionStorage.setItem('role', res.role)
+        this.router.navigate(['/index/home'])
       },
       error: error => {
         this.toastr.error('Erro de Login', 'Error', {

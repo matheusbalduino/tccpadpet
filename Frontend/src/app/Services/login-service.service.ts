@@ -20,6 +20,7 @@ export class LoginServiceService extends BaseService {
       map((response: any ) =>{
         if(response.credentials.token){
           sessionStorage.setItem('logged', 'true');
+          sessionStorage.setItem('role', response.role)
           this.isLoggedIn = true;
         }
         return response || null;

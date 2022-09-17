@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
    }
 
   logout(){
-    sessionStorage.setItem('logged', 'false')
+    sessionStorage.clear()
     this.route.navigate([''])
   }
 

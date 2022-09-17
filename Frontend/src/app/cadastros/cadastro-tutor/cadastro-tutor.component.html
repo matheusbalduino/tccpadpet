@@ -1,11 +1,23 @@
 
 <div class="container">
   <form [formGroup]="registerTutor" >
+    <div class="row">
+      <div class="col-md-6">
+        <input [hidden]="true" id="input-file-id" multiple type="file" formControlName="avatar" />
+        <label for="input-file-id" class="btn btn-primary mt-4" style="cursor: pointer; width: 100%;">Escolher Imagem</label>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="standard">
+          <mat-label>Descrição</mat-label>
+          <textarea id='description' formControlName="description" matInput placeholder="Ex. sou feliz e divertido"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
   <div class="row">
     <div class="col-md-6">
       <mat-form-field appearance="standard">
         <mat-label>Nome Usuário</mat-label>
-        <input matInput formControlName="avatar">
+        <input matInput formControlName="name">
       </mat-form-field>
     </div>
     <div class="col-md-6">
@@ -35,6 +47,50 @@
       </mat-form-field>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label> Logradouro </mat-label>
+        <input matInput formControlName="street">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label>Número</mat-label>
+        <input matInput formControlName="number">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label> Bairro </mat-label>
+        <input matInput formControlName="neighborhood">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label>CEP</mat-label>
+        <input matInput formControlName="zip_code">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label> Cidade </mat-label>
+        <input matInput formControlName="city">
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>UF</mat-label>
+        <mat-select formControlName="state">
+          <mat-option *ngFor="let state of states"  value="state.nome"> {{state.nome}} - {{state.sigla}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
   <div class="row mt-1">
     <div class="col-md-12"  style="text-align: end;" >
       <button style="width: 100%;" type="submit" [disabled]="!registerTutor.valid" mat-raised-button (click)="postUser()" > Enviar </button>
@@ -42,38 +98,7 @@
   </div>
 </form>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-4">
 
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="username">
-    <th mat-header-cell *matHeaderCellDef> Nome Usuário </th>
-    <td mat-cell *matCellDef="let element"> {{element.username}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="first_name">
-    <th mat-header-cell *matHeaderCellDef> Primeiro Nome </th>
-    <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="last_name">
-    <th mat-header-cell *matHeaderCellDef> Sobrenome </th>
-    <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
-  </ng-container>
-
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef> E-mail </th>
-    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
 <div class="row mt-5">
   <img style="width:100px" src="{{baseUrl}}/tutor/image/1662132979847.jpeg" alt="">
 </div>

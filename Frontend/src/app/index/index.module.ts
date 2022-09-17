@@ -11,16 +11,20 @@ import { MaterialModule } from 'material.module';
 import { CadastrosModule } from '../cadastros/cadastros.module';
 import { CadastroService } from '../Services/cadastro-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UsersModule } from '../users/users.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
-    IndexComponent
+    IndexComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,
     IndexRoutingModule,
     SharedModule,
     CadastrosModule,
+    UsersModule,
 
     ReactiveFormsModule,
     MatNativeDateModule,

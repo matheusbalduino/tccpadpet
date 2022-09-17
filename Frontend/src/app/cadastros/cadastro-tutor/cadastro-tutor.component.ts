@@ -7,6 +7,7 @@ import { Tutor } from 'src/app/interfaces/user';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/validators/generic-form-validation';
 import { existsValue } from 'src/app/utils/stringUtils';
 import { environment } from 'src/environments/environment';
+import { states }  from 'src/app/interfaces/states';
 
 @Component({
   selector: 'app-cadastro-tutor',
@@ -22,8 +23,9 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
   hide1 = true;
   hide2 = true;
   tutorSend: Tutor = new Tutor()
-  displayedColumns: string[] = ['email', 'first_name', 'last_name', 'username'];
-  dataSource: Tutor[] = [];
+
+  states: any = states;
+
   registerTutor: FormGroup;
   tutorErrors: any = {
     document: false,
@@ -75,40 +77,11 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
   }
 
   getUsers() {
-    // this.cadastro.getDataUsers().subscribe((res: User[]) => {
-    //   this.dataSource = res.map((item: User) => {
-    //     return {
-    //       email: item.email,
-    //       first_name: item.first_name,
-    //       last_name: item.last_name,
-    //       username: item.username,
-    //     }
-    //   })
-    // })
+
   }
 
   postUser() {
-    // if (false) {
-    //   this.toastr.success('Usuário Criado', 'Sucesso', {
-    //     timeOut: 3000,
-    //   });
-    //   this.cadastro.postDataUser().subscribe((res) => console.log(res));
-    //   setTimeout(() => {
-    //     this.getUsers()
-    //   }, 300)
-    // }
-    // else if (false) {
-    //   console.log('error');
-    //   this.toastr.error('Senhas não conferem', 'Erro de Cadastro', {
-    //     timeOut: 3000,
-    //   });
-    // }
-    // else {
-    //   console.log('error');
-    //   this.toastr.error('Dados Obrigatórios', 'Erro de Cadastro', {
-    //     timeOut: 3000,
-    //   });
-    // }
+
     this.toastr.success('Usuário Criado', 'Sucesso', {
       timeOut: 3000
     })
@@ -122,9 +95,16 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
     try {
       this.registerTutor = this.fb.group({
         avatar: [""],
+        name: [""],
+        description: [""],
         document: ["", [Validators.required]],
         email: ["", [Validators.required]],
-        description: [""]
+        street: [""],
+        number: [""],
+        neighborhood: [""],
+        zip_code: [""],
+        city: [""],
+        state: [""]
       });
     } catch (error) {
       console.log(error)

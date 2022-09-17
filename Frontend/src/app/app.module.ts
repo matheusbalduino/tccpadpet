@@ -15,12 +15,14 @@ import { MaterialModule } from 'material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { InterceptorModule } from './interceptors/interceptor.module';
 import { SignedinGuard } from './signedin.guard';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CreateAccountComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +41,7 @@ import { SignedinGuard } from './signedin.guard';
       preventDuplicates: true,
       progressBar: true
     }),
+
   ],
   providers: [ SignedinGuard ],
   bootstrap: [AppComponent]
