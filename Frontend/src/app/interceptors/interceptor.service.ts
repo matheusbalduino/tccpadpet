@@ -21,6 +21,8 @@ export class Interceptor implements HttpInterceptor {
         }
       })
     }
+
+    console.log('req', req)
     return next.handle(req)
   }
 }

@@ -7,7 +7,7 @@ import { Tutor } from 'src/app/interfaces/user';
 import { DisplayMessage, GenericValidator, ValidationMessages } from 'src/app/validators/generic-form-validation';
 import { existsValue } from 'src/app/utils/stringUtils';
 import { environment } from 'src/environments/environment';
-import { states }  from 'src/app/interfaces/states';
+import { states } from 'src/app/interfaces/states';
 
 @Component({
   selector: 'app-cadastro-tutor',
@@ -20,12 +20,8 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
   /**
   * VARIABLES
   */
-  hide1 = true;
-  hide2 = true;
+  states = states;
   tutorSend: Tutor = new Tutor()
-
-  states: any = states;
-
   registerTutor: FormGroup;
   tutorErrors: any = {
     document: false,
@@ -56,6 +52,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.index();
+    this.showUser();
   }
 
   ngAfterViewInit(): void {
@@ -76,19 +73,49 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
     this.validateForm();
   }
 
-  getUsers() {
-
-  }
-
   postUser() {
-
-    this.toastr.success('Usuário Criado', 'Sucesso', {
-      timeOut: 3000
-    })
     this.tutorSend = Object.assign(this.tutorSend, this.registerTutor.value)
     console.log(this.tutorSend)
-    this.registerTutor.reset()
+    this.cadastro.updateUser("tutor",  this.tutorSend).subscribe(
+      {
+        next: (res) => {
+          console.log(res);
+          this.toastr.success('Usuário Criado', 'Sucesso', {
+            timeOut: 3000
+          })
+        },
+        error: (err) => {
+          console.log(err)
+          this.toastr.error('Não foi possível criar usuário', 'Error', {
+            timeOut: 3000
+          })
+        }
+      }
+    )
 
+    this.registerTutor.reset();
+  }
+
+  showUser(){
+    this.cadastro.getUser("tutor").subscribe({
+      next: (res) => {
+        console.log(res)
+        this.registerTutor.setValue({
+          city: res?.city,
+          number:res?.number,
+          state: res?.state,
+          street: res?.street,
+          neighborhood: res?.neighborhood,
+          zip_code: res?.zip_code,
+          avatar: res.tutor?.avatar,
+          description: res.tutor?.description,
+          document: res.tutor?.document,
+          email: res.tutor?.email,
+          name: res.username
+        })
+      },
+      error: (err) => console.log(err)
+    })
   }
 
   validateForm(): void {

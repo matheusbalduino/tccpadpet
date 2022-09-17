@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CadastroTutorComponent } from './cadastro-tutor/cadastro-tutor.component';
 import { MaterialModule } from 'material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InterceptorModule } from '../interceptors/interceptor.module';
 
 
 
@@ -14,7 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InterceptorModule
   ],
   exports: [
     CadastroTutorComponent

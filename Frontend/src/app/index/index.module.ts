@@ -13,6 +13,7 @@ import { CadastroService } from '../Services/cadastro-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { UsersModule } from '../users/users.module';
 import { HomeComponent } from './home/home.component';
+import { InterceptorModule } from '../interceptors/interceptor.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { HomeComponent } from './home/home.component';
     SharedModule,
     CadastrosModule,
     UsersModule,
-
+    InterceptorModule,
     ReactiveFormsModule,
     MatNativeDateModule,
     MaterialModule,

@@ -4,13 +4,10 @@
     <div class="row">
       <div class="col-md-6">
         <input [hidden]="true" id="input-file-id" multiple type="file" formControlName="avatar" />
-        <label for="input-file-id" class="btn btn-primary mt-4" style="cursor: pointer; width: 100%;">Escolher Imagem</label>
+        <label for="input-file-id" class="btn btn-primary mb-3" style="cursor: pointer; width: 100%;">Escolher Imagem</label>
       </div>
       <div class="col-md-6">
-        <mat-form-field appearance="standard">
-          <mat-label>Descrição</mat-label>
-          <textarea id='description' formControlName="description" matInput placeholder="Ex. sou feliz e divertido"></textarea>
-        </mat-form-field>
+
       </div>
     </div>
   <div class="row">
@@ -43,7 +40,7 @@
     <div class="col-md-6">
       <mat-form-field appearance="standard">
         <mat-label>Descrição</mat-label>
-        <input matInput formControlName="description">
+        <textarea id='description' formControlName="description" matInput placeholder="Ex. sou feliz e divertido"></textarea>
       </mat-form-field>
     </div>
   </div>
@@ -86,7 +83,7 @@
       <mat-form-field appearance="fill">
         <mat-label>UF</mat-label>
         <mat-select formControlName="state">
-          <mat-option *ngFor="let state of states"  value="state.nome"> {{state.nome}} - {{state.sigla}}</mat-option>
+          <mat-option *ngFor="let state of states"  value="{{state.nome}}"> {{state.nome}} - {{state.sigla}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

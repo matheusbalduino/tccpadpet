@@ -26,9 +26,16 @@ class TutorController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({request, response, params}){
-    const tutor = await Tutor.findOrFail(params.id);
-    response.send(tutor);
+  async show({request, response}){
+    const{ id, tutor_id, username } = request.get();
+    try {
+      const tutor = await User.query().where('id', id).with('tutor').first();
+      tutor.password = undefined;
+      response.send(tutor);
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async showimage({response, params}){
@@ -79,10 +86,9 @@ class TutorController {
 
   async update({ request, response, params }) {
     try {
-      const { id } = params;
+      const { id, tutor_id } = request.get();
 
       const dataTutor = request.only([
-        "avatar",
         "document",
         "email",
         "description",
@@ -101,10 +107,10 @@ class TutorController {
         "country",
       ]);
 
-      const tutor = await Tutor.findBy("id", id);
+      const tutor = await Tutor.findBy("id", tutor_id);
       if (!tutor) throw new Error("Tutor não existe");
 
-      const user = await User.findBy("tutor_id", id);
+      const user = await User.findBy("tutor_id", tutor_id);
       if (!user) throw new Error("Usuário não existe");
 
       const trx = await Database.beginTransaction();
@@ -116,8 +122,7 @@ class TutorController {
             !!dataTutor[item] &&
             dataTutor[item] != "" &&
             dataTutor[item] !== tutor[item]
-          )
-            dataTutor[item] = dataTutor[item];
+          ) dataTutor[item] = dataTutor[item];
           else delete dataTutor[item];
         });
 

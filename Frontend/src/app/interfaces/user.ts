@@ -3,6 +3,13 @@ export class Tutor {
   document: string
   email: string
   description: string
+  street: string
+  number: string
+  neighborhood: string
+  zip_code: string
+  city:string
+  state: string
+  country: string = "Brasil";
 
 }
 
