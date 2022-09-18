@@ -23,16 +23,16 @@ export class ChatComponent implements OnInit {
       $(".messagehide").hide('slow')
       $("hr").hide('slow')
       $(".search-box").hide('slow')
-
+      $(".mainchat").removeClass("col-md-8")
+      $(".mainchat").addClass("col-md-12")
     }
     else{
       this.click = true;
       $(".messagehide").show('slow')
       $("hr").show('slow')
       $(".search-box").show('slow')
-
-
-
+      $(".mainchat").removeClass("col-md-12")
+      $(".mainchat").addClass("col-md-8")
     }
   }
 
