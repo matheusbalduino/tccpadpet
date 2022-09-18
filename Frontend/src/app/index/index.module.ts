@@ -14,11 +14,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsersModule } from '../users/users.module';
 import { HomeComponent } from './home/home.component';
 import { InterceptorModule } from '../interceptors/interceptor.module';
+import { ChatComponent } from '../chat/chat.component';
+import { UsersComponent } from '../users/users.component';
+
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     IndexComponent,
-    HomeComponent
+    HomeComponent,
+    UsersComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +32,7 @@ import { InterceptorModule } from '../interceptors/interceptor.module';
     SharedModule,
     CadastrosModule,
     UsersModule,
+    FontAwesomeModule,
     InterceptorModule,
     ReactiveFormsModule,
     MatNativeDateModule,

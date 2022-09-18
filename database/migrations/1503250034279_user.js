@@ -32,6 +32,7 @@ class UserSchema extends Schema {
 
     this.create('veterinaries', (table) => {
       table.increments()
+      table.string('avatar')
       table.string('crmv').notNullable().unique()
       table.string('email', 254).notNullable().unique()
       table.string('document').notNullable().unique()

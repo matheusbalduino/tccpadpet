@@ -13,6 +13,10 @@ class CheckVet {
     // call next to advance the request
     if(auth.user.role !== "vet")
       return response.status(401).send({message: 'User Not Authorized'})
+
+    request._qs.id = auth.user.id;
+    request._qs.username = auth.user.username;
+    request._qs.veterinary_id = auth.user.veterinary_id;
     await next()
   }
 }

@@ -14,7 +14,7 @@
     <div class="col-md-6">
       <mat-form-field appearance="standard">
         <mat-label>Nome Usuário</mat-label>
-        <input matInput formControlName="name">
+        <input matInput formControlName="username">
       </mat-form-field>
     </div>
     <div class="col-md-6">
@@ -37,10 +37,16 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div class="col-md-6">
+    <div *ngIf="user === 'tutor'" class="col-md-6">
       <mat-form-field appearance="standard">
         <mat-label>Descrição</mat-label>
         <textarea id='description' formControlName="description" matInput placeholder="Ex. sou feliz e divertido"></textarea>
+      </mat-form-field>
+    </div>
+    <div *ngIf="user === 'vet'" class="col-md-6">
+      <mat-form-field appearance="standard">
+        <mat-label>CRMV</mat-label>
+        <input id='crmv' formControlName="crmv" matInput/>
       </mat-form-field>
     </div>
   </div>

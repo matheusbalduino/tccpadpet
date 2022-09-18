@@ -23,6 +23,26 @@ class VeterinaryController {
    */
   async index({ request, response, view }) {}
 
+/**
+   * Show a list of one tutor.
+   * GET schedules
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+ async show({request, response}){
+  const{ id } = request.get();
+  try {
+    const vet = await User.query().where('id', id).with('veterinary').first();
+    vet.password = undefined;
+    response.send(vet);
+
+  } catch (error) {
+    console.log(error)
+  }
+}
   /**
    * Create/save a new veterinary.
    * POST veterinaries
@@ -72,7 +92,7 @@ class VeterinaryController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response }) {
-    const { id } = params;
+    const { veterinary_id } = request.get();
     let user_ret;
     try {
       const trx = await Database.beginTransaction();
@@ -91,10 +111,10 @@ class VeterinaryController {
         "country",
       ]);
 
-      const vet = await Vet.find(id);
+      const vet = await Vet.find(veterinary_id);
       if (!vet) throw new Error();
 
-      const user = await User.findBy("veterinary_id", id);
+      const user = await User.findBy("veterinary_id", veterinary_id);
       if (!user) throw new Error();
 
       Object.keys(dataVet).forEach((item) => {

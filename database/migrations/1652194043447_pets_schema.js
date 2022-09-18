@@ -7,6 +7,7 @@ class PetsSchema extends Schema {
   up () {
     this.create('pets', (table) => {
       table.increments()
+      table.string('avatar')
       table.string('name').notNullable()
       table.string('race').notNullable()
       table.string('weight').notNullable()

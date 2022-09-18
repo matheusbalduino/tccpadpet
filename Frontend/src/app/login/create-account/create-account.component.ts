@@ -81,7 +81,7 @@ export class CreateAccountComponent implements OnInit, AfterViewInit {
     this.user.role = "tutor"
 
     if(this.user.usertype === 'vet'){
-      this.user.role = "Vet"
+      this.user.role = "vet"
       if(!existsValue(this.user.crmv)){
         this.tutorErrors.crmv = true;
         this.displayMessage['crmv'] = 'Informe seu CRMV <br/>';

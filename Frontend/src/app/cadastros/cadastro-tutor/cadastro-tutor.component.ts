@@ -104,17 +104,18 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
       next: (res) => {
         console.log(res)
         this.registerTutor.setValue({
-          city: res?.city,
-          number:res?.number,
-          state: res?.state,
-          street: res?.street,
-          neighborhood: res?.neighborhood,
-          zip_code: res?.zip_code,
-          avatar: res.tutor?.avatar,
-          description: res.tutor?.description,
-          document: res.tutor?.document,
-          email: res.tutor?.email,
-          name: res.username
+          city: res?.city || "",
+          number:res?.number || "",
+          state: res?.state || "",
+          street: res?.street || "",
+          neighborhood: res?.neighborhood || "",
+          zip_code: res?.zip_code || "",
+          avatar: res.tutor?.avatar || res.veterinary?.avatar ||  "",
+          description: res.tutor?.description || res.veterinary?.description ||  "",
+          document: res.tutor?.document || res.veterinary?.document ||  "",
+          email: res.tutor?.email || res.veterinary?.email ||  "",
+          username: res.username || "",
+          crmv: res.veterinary?.crmv || ""
         })
       },
       error: (err) => console.log(err)
@@ -125,7 +126,7 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
     try {
       this.registerTutor = this.fb.group({
         avatar: [""],
-        name: [""],
+        username: [""],
         description: [""],
         document: ["", [Validators.required]],
         email: ["", [Validators.required]],
@@ -134,7 +135,8 @@ export class CadastroTutorComponent implements OnInit, AfterViewInit {
         neighborhood: [""],
         zip_code: [""],
         city: [""],
-        state: [""]
+        state: [""],
+        crmv:[""]
       });
     } catch (error) {
       console.log(error)

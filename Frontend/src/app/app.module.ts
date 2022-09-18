@@ -15,14 +15,13 @@ import { MaterialModule } from 'material.module';
 import { HttpClientModule } from '@angular/common/http';
 import { InterceptorModule } from './interceptors/interceptor.module';
 import { SignedinGuard } from './signedin.guard';
-import { UsersComponent } from './users/users.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CreateAccountComponent,
-    UsersComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +34,7 @@ import { UsersComponent } from './users/users.component';
     MaterialModule,
     HttpClientModule,
     InterceptorModule,
+    FontAwesomeModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
