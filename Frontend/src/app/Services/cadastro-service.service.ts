@@ -37,5 +37,11 @@ export class CadastroService extends BaseService {
      catchError((error) => throwError(error))
     )
   }
+  getUsers(user: string): Observable<any>{
+    return this.http.get(`${this.url}/${user}/index`,this.getHeaderJson()).pipe(
+     map(this.extractData),
+     catchError((error) => throwError(error))
+    )
+  }
 
 }

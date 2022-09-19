@@ -22,17 +22,17 @@ class MessageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async getMessagesSender ({ params, response }) {
+  async getMessagesSender({ params, response }) {
     try {
-      const { sender , reciever } = params;
+      const { sender, reciever } = params;
 
       const message = await Messages.query()
-      .select(['tutor_id', 'veterinary_id', 'message','sender','reciever'])
-      .whereIn('sender', [sender, reciever])
-      .whereIn('reciever', [sender, reciever])
-      .andWhere('selfsender', false)
-      .getSenderByUser(sender, reciever)
-      .fetch();
+        .select(['tutor_id', 'veterinary_id', 'message', 'sender', 'reciever'])
+        .whereIn('sender', [sender, reciever])
+        .whereIn('reciever', [sender, reciever])
+        .andWhere('selfsender', false)
+        .getSenderByUser(sender, reciever)
+        .fetch();
 
       return response.send(message);
 
@@ -40,18 +40,18 @@ class MessageController {
       throw error;
     }
   }
- /**
-   * Create/save a new message.
-   * POST messages
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-    const {message_sent,sender,reciever,selfsender
+  /**
+    * Create/save a new message.
+    * POST messages
+    *
+    * @param {object} ctx
+    * @param {Request} ctx.request
+    * @param {Response} ctx.response
+    */
+  async store({ request, response }) {
+    const { message_sent, sender, reciever, selfsender
     } = request.post()
-    try{
+    try {
 
       const message = new Message(
         sender,
@@ -61,9 +61,9 @@ class MessageController {
       );
 
       const ret_message = await message.registerMessage();
-      response.status(201).send({message:ret_message})
+      response.status(201).send({ message: ret_message })
 
-    }catch(error){
+    } catch (error) {
       throw error;
     }
   }
@@ -77,7 +77,7 @@ class MessageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
+  async show({ params, request, response, view }) {
   }
 
   /**
@@ -89,7 +89,7 @@ class MessageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async edit ({ params, request, response, view }) {
+  async edit({ params, request, response, view }) {
   }
 
   /**
@@ -100,7 +100,7 @@ class MessageController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update({ params, request, response }) {
   }
 
   /**
@@ -111,7 +111,7 @@ class MessageController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy({ params, request, response }) {
   }
 }
 

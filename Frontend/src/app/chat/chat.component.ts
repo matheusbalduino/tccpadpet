@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
+import { CadastroService } from '../Services/cadastro-service.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,26 +12,51 @@ export class ChatComponent implements OnInit {
     Name: "matheus",
     Message: "esta mensagem"
   }
-  constructor() { }
-  ngOnInit(): void {
+
+  vets: any[];
+  vetOne: any ={
+    user:{
+      username: ""
+    }
   }
 
+  constructor(private serviceUsers: CadastroService) { }
+
+  ngOnInit(): void {
+    this.getVets();
+    this.vetOne = this.vets[0];
+  }
+
+  getVets(){
+    this.serviceUsers.getUsers("vet").subscribe({
+      next: (res:any) => {
+        console.log(res)
+        this.vets = res
+      }
+    })
+  }
+
+  getVet(vet:any){
+    this.vetOne = vet;
+    //this.chatService.() usar o vet aqui e o usuário da session
+  }
+  
   click = true
   hideChats(){
     console.log('testeclick')
     if(this.click){
       this.click = false;
-      $(".messagehide").hide('slow')
-      $("hr").hide('slow')
-      $(".search-box").hide('slow')
+      $(".messagehide").hide()
+      $("hr").hide()
+      $(".search-box").hide()
       $(".mainchat").removeClass("col-md-8")
       $(".mainchat").addClass("col-md-12")
     }
     else{
       this.click = true;
-      $(".messagehide").show('slow')
-      $("hr").show('slow')
-      $(".search-box").show('slow')
+      $(".messagehide").show()
+      $("hr").show()
+      $(".search-box").show()
       $(".mainchat").removeClass("col-md-12")
       $(".mainchat").addClass("col-md-8")
     }

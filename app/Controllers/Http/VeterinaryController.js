@@ -21,7 +21,15 @@ class VeterinaryController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ request, response, view }) {
+
+    try {
+      const vets = await Vet.query().with('user').fetch();
+      response.send(vets);
+    } catch (error) {
+      throw error;
+    }
+  }
 
 /**
    * Show a list of one tutor.
