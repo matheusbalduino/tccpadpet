@@ -20,6 +20,13 @@ export class ChatService extends BaseService {
     )
   }
 
+  getMessage(receiver:number): Observable<any>{
+    return this.http.get(`${this.url}/message/index/${receiver}`, this.getHeaderJson()).pipe(
+     map(this.extractData),
+     catchError((error) => throwError(error))
+    )
+  }
+
 
 
 }

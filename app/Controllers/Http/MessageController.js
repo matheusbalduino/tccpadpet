@@ -22,16 +22,16 @@ class MessageController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async getMessagesSender({ params, response }) {
+  async getMessagesSender({ request, params, response }) {
     try {
-      const { sender, reciever } = params;
-
+      const { receiver } = params;
+      const { sender } = request.get();
       const message = await Messages.query()
-        .select(['tutor_id', 'veterinary_id', 'message', 'sender', 'reciever'])
-        .whereIn('sender', [sender, reciever])
-        .whereIn('reciever', [sender, reciever])
+        .select(['message', 'sender', 'reciever as receiver', 'selfsender'])
+        .whereIn('sender', [sender, receiver])
+        .whereIn('reciever', [sender, receiver])
         .andWhere('selfsender', false)
-        .getSenderByUser(sender, reciever)
+        //.getSenderByUser(sender, reciever)
         .fetch();
 
       return response.send(message);
@@ -49,7 +49,7 @@ class MessageController {
     * @param {Response} ctx.response
     */
   async store({ request, response }) {
-    const { message_sent, reciever
+    const { message_sent, receiver
     } = request.post()
 
     const { sender } = request.get();
@@ -57,7 +57,7 @@ class MessageController {
 
       const message = new Message(
         sender,
-        reciever,
+        receiver,
         message_sent
       );
 

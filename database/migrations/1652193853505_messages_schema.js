@@ -10,6 +10,7 @@ class MessagesSchema extends Schema {
       table.string('message')
       table.integer('sender').notNullable()
       table.integer('reciever').notNullable()
+      table.boolean('selfsender').notNullable()
       table.timestamps()
     })
   }

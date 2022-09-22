@@ -2,9 +2,9 @@ const User = use('App/Models/User')
 
 class Message{
 
-  constructor(sender, reciever, message){
+  constructor(sender, receiver, message){
     this.sender = sender;
-    this.reciever = reciever;
+    this.receiver = receiver;
     this.message = message;
   }
 
@@ -14,8 +14,8 @@ class Message{
       const body = {
         message: this.message,
         sender:  this.sender,
-        reciever: this.reciever,
-        selfsender: this.sender === this.reciever? true : false
+        reciever: this.receiver,
+        selfsender: this.sender === this.receiver? true : false
       };
 
       const user = await User.findBy('id', this.sender);

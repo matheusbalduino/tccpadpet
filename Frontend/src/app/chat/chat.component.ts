@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
-import { Message } from '../interfaces/messages';
+import { Message, Messages } from '../interfaces/messages';
 import { CadastroService } from '../Services/cadastro-service.service';
 import { ChatService } from '../Services/chat.service';
 
@@ -12,6 +12,7 @@ import { ChatService } from '../Services/chat.service';
 export class ChatComponent implements OnInit {
 
   message: string = "";
+  messages: Messages[];
 
   vets: any[];
   vetOne: any ={
@@ -38,17 +39,30 @@ export class ChatComponent implements OnInit {
 
   getVet(vet:any){
     this.vetOne = vet;
+    this.getMessages()
     //this.chatService.() usar o vet aqui e o usuário da session
+  }
+
+  getMessages(){
+    this.chatService.getMessage(this.vetOne.user.id).subscribe({
+      next: (res: Messages[])=> {
+        this.messages = res
+        console.log(this.messages)
+      }
+    })
   }
 
   sendMessage(){
     const body: Message = {
       receiver : this.vetOne.user.id,
-      message: this.message
+      message_sent: this.message
     }
     console.log(body)
     this.chatService.sendMessage(body).subscribe({
-      next: (res)=> console.log(res)
+      next: (res)=> {
+        this.getMessages();
+        console.log(res)
+      }
     })
   }
 
