@@ -1,105 +1,76 @@
-<div class="container" style="margin-top: 0%;">
-  <div class="row no-gutters">
-    <div class="messagehide col-md-4 border-right">
-    <div class="settings-tray">
-      <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/filip.jpg" alt="Profile img">
-      <span class="settings-tray--right">
-      <i class="material-icons">cached</i>
-      <i class="material-icons">message</i>
-      <i class="material-icons" (click)="hideChats()">menu</i>
-      </span>
-    </div>
-    <div class="search-box">
-      <div class="input-wrapper">
-      <i class="material-icons">search</i>
-      <input placeholder="Search here" type="text">
-      </div>
-    </div>
-    <div *ngFor="let vet of vets">
-      <div class="messagehide friend-drawer friend-drawer--onhover" (click)="getVet(vet)">
-        <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
-        <div class="text">
-        <h6>{{vet.user.username}}</h6>
+<body>
+  <div class="container" style="margin-top: 0%; height: 100%;">
+    <div class="row no-gutters" style="height: 100%;">
+      <div class="messagehide col-md-4 border-right">
+        <div class="settings-tray">
+          <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/filip.jpg"
+            alt="Profile img">
+          <span class="settings-tray--right">
+            <i class="material-icons">cached</i>
+            <i class="material-icons">message</i>
+            <i class="material-icons" (click)="hideChats()">menu</i>
+          </span>
         </div>
-        <span class="time text-muted small">13:21</span>
-      </div>
-      <hr>
-  </div>
-
-    </div>
-    <div class="mainchat col-md-8">
-      <div class="settings-tray">
-        <div class="friend-drawer no-gutters friend-drawer--grey">
-          <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg" alt="">
-          <div class="text">
-            <h6>{{vetOne.user.username}}</h6>
+        <div class="search-box">
+          <div class="input-wrapper">
+            <i class="material-icons">search</i>
+            <input placeholder="Search here" type="text">
           </div>
+        </div>
+        <div *ngFor="let vet of vets">
+          <div class="messagehide friend-drawer friend-drawer--onhover" (click)="getVet(vet)">
+            <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+              alt="">
+            <div class="text">
+              <h3>{{vet?.user?.username}}</h3>
+            </div>
+            <span class="time text-muted small">13:21</span>
+          </div>
+          <hr>
+        </div>
+
+      </div>
+      <div class="mainchat col-md-8">
+        <div class="settings-tray">
           <span class="settings-tray--right">
             <i class="material-icons" (click)="hideChats()">menu</i>
-            </span>
+          </span>
+          <div class="friend-drawer no-gutters friend-drawer--grey">
+            <img class="profile-image" src="https://www.clarity-enhanced.net/wp-content/uploads/2020/06/robocop.jpg"
+              alt="">
+            <div class="text">
+              <h2>{{vetOne?.user?.username}}</h2>
+            </div>
+
+          </div>
         </div>
-    </div>
-    <div class="chat-panel">
-      <div class="row no-gutters">
-      <div class="col-md-3">
-        <div class="chat-bubble chat-bubble--left">
-        Hello dude!
+        <div class="chat-panel">
+          <div class="row no-gutters">
+            <div class="col-md-9">
+              <div class="chat-bubble chat-bubble--left">
+                Hello dude!
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="col-md-9 offset-md-3">
+              <div class="chat-bubble chat-bubble--right">
+                Hello dude!Hello dude!Hello dude!Hello dude!Hello dude! {{message}}
+              </div>
+            </div>
+          </div>
+
         </div>
-      </div>
-      </div>
-      <div class="row no-gutters">
-      <div class="col-md-3 offset-md-9">
-        <div class="chat-bubble chat-bubble--right">
-        Hello dude!
-        </div>
-      </div>
-      </div>
-      <div class="row no-gutters">
-      <div class="col-md-3 offset-md-9">
-        <div class="chat-bubble chat-bubble--right">
-        Hello dude!
-        </div>
-      </div>
-      </div>
-      <div class="row no-gutters">
-      <div class="col-md-3">
-        <div class="chat-bubble chat-bubble--left">
-        Hello dude!
-        </div>
-      </div>
-      </div>
-      <div class="row no-gutters">
-      <div class="col-md-3">
-        <div class="chat-bubble chat-bubble--left">
-        Hello dude!
-        </div>
-      </div>
-      </div>
-      <div class="row no-gutters">
-      <div class="col-md-3">
-        <div class="chat-bubble chat-bubble--left">
-        Hello dude!
-        </div>
-      </div>
-      </div>
-      <div class="row no-gutters">
-      <div class="col-md-3 offset-md-9">
-        <div class="chat-bubble chat-bubble--right">
-        Hello dude!
-        </div>
-      </div>
-      </div>
-      <div class="row">
-      <div class="col-12">
         <div class="chat-box-tray">
-        <i class="material-icons">sentiment_very_satisfied</i>
-        <textarea placeholder="Type your message here..."></textarea>
-        <i class="material-icons">mic</i>
-        <i class="material-icons">send</i>
+          <i class="material-icons">sentiment_very_satisfied</i>
+          <textarea placeholder="Type your message here..." [(ngModel)]="message"></textarea>
+          <i class="material-icons">mic</i>
+          <i class="material-icons" (click)="sendMessage()" style="cursor: pointer;">send</i>
         </div>
       </div>
-      </div>
-    </div>
+
     </div>
   </div>
-  </div>
+
+
+</body>

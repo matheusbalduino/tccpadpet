@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
+import { Message } from '../interfaces/messages';
 import { CadastroService } from '../Services/cadastro-service.service';
+import { ChatService } from '../Services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,10 +10,8 @@ import { CadastroService } from '../Services/cadastro-service.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  message: any ={
-    Name: "matheus",
-    Message: "esta mensagem"
-  }
+
+  message: string = "";
 
   vets: any[];
   vetOne: any ={
@@ -20,11 +20,10 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  constructor(private serviceUsers: CadastroService) { }
+  constructor(private serviceUsers: CadastroService, private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.getVets();
-    this.vetOne = this.vets[0];
   }
 
   getVets(){
@@ -32,6 +31,7 @@ export class ChatComponent implements OnInit {
       next: (res:any) => {
         console.log(res)
         this.vets = res
+        this.vetOne = this.vets[0];
       }
     })
   }
@@ -40,7 +40,18 @@ export class ChatComponent implements OnInit {
     this.vetOne = vet;
     //this.chatService.() usar o vet aqui e o usuário da session
   }
-  
+
+  sendMessage(){
+    const body: Message = {
+      receiver : this.vetOne.user.id,
+      message: this.message
+    }
+    console.log(body)
+    this.chatService.sendMessage(body).subscribe({
+      next: (res)=> console.log(res)
+    })
+  }
+
   click = true
   hideChats(){
     console.log('testeclick')

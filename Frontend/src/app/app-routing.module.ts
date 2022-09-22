@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChatComponent } from './chat/chat.component';
 import { CreateAccountComponent } from './login/create-account/create-account.component';
 import { LoginComponent } from './login/login.component';
 import { SignedinGuard } from './signedin.guard';
@@ -15,6 +16,7 @@ const routes: Routes = [
    loadChildren: () => import('./index/index.module').then(m => m.IndexModule),
    canActivate: [SignedinGuard]
   },
+  { path:"index/chat", component: ChatComponent },
   {
     path:'',
     redirectTo:'',

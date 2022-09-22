@@ -9,5 +9,5 @@ Route.group(() => {
 
 Route.group(()=>{
   Route.get("/index", "VeterinaryController.index").middleware('auth');
-  Route.post("/store", "VeterinaryController.store").middleware('auth');
+  Route.post("/store", "VeterinaryController.store").middleware('guest');
 }).prefix("/vet")

@@ -14,7 +14,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { UsersModule } from '../users/users.module';
 import { HomeComponent } from './home/home.component';
 import { InterceptorModule } from '../interceptors/interceptor.module';
-import { ChatComponent } from '../chat/chat.component';
 import { UsersComponent } from '../users/users.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -24,7 +23,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     IndexComponent,
     HomeComponent,
     UsersComponent,
-    ChatComponent
   ],
   imports: [
     CommonModule,

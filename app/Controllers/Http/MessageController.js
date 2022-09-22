@@ -49,15 +49,16 @@ class MessageController {
     * @param {Response} ctx.response
     */
   async store({ request, response }) {
-    const { message_sent, sender, reciever, selfsender
+    const { message_sent, reciever
     } = request.post()
+
+    const { sender } = request.get();
     try {
 
       const message = new Message(
         sender,
         reciever,
-        message_sent,
-        selfsender
+        message_sent
       );
 
       const ret_message = await message.registerMessage();

@@ -16,12 +16,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { InterceptorModule } from './interceptors/interceptor.module';
 import { SignedinGuard } from './signedin.guard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

@@ -12,8 +12,6 @@ const routes: Routes = [
       { path:'cadastro', component: CadastroTutorComponent },
       { path:'users', component: UsersComponent },
       { path:'home', component: HomeComponent },
-      { path:'chat', component: ChatComponent },
-
     ],
   }
 

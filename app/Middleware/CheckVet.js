@@ -11,7 +11,7 @@ class CheckVet {
    */
   async handle ({ request, auth, response }, next) {
     // call next to advance the request
-    if(auth.user.role !== "vet")
+    if(auth.user.role !== "vet" && auth.user.role !== "admin")
       return response.status(401).send({message: 'User Not Authorized'})
 
     request._qs.id = auth.user.id;
