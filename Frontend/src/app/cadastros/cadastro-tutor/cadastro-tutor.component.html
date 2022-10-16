@@ -1,5 +1,6 @@
 
 <div class="container">
+  <mat-card>
   <form [formGroup]="registerTutor" >
     <div class="row">
       <div class="col-md-6">
@@ -94,12 +95,14 @@
       </mat-form-field>
     </div>
   </div>
+
   <div class="row mt-1">
     <div class="col-md-12"  style="text-align: end;" >
       <button style="width: 100%;" type="submit" [disabled]="!registerTutor.valid" mat-raised-button (click)="postUser()" > Enviar </button>
     </div>
   </div>
 </form>
+</mat-card>
 
 
 <div class="row mt-5">

@@ -30,9 +30,10 @@ export class ChatComponent implements OnInit {
   getVets(){
     this.serviceUsers.getUsers("vet").subscribe({
       next: (res:any) => {
-        console.log(res)
+        
         this.vets = res
         this.vetOne = this.vets[0];
+        console.log(this.vetOne)
       }
     })
   }
